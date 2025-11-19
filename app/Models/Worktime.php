@@ -20,4 +20,8 @@ class Worktime extends Model
     {
         return $this->belongsTo(Member::class);
     }   
+    public function weekly()
+    {
+         return $this->belongsTo(Weekly::class);
+    }
 }

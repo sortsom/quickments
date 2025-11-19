@@ -37,7 +37,7 @@ $holidays = [
             ['id' => 21, 'date' => '2025-11-09', 'description' => 'ពិធីបុណ្យឯករាជ្យជាតិ'],
             ['id' => 22, 'date' => '2025-12-29', 'description' => 'ទិវាសន្ដិភាពនៅកម្ពុជា'],
         ];
-
+        
         DB::table('holidays')->insert($holidays);
     }
 }

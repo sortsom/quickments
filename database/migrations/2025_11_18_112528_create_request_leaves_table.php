@@ -17,12 +17,7 @@ return new class extends Migration
             $table->date('date');
             $table->time('start_time');
             $table->time('end_time');
-            $table->enum('type', [
-    'full_day',
-    'half_day_morning',
-    'half_day_afternoon'
-])->default('full_day');
-
+            $table->enum('type', ['full_day','half_day_morning','half_day_afternoon'])->default('full_day');
             $table->text('reason')->nullable();
             $table->string('photo');
             $table->integer('status');

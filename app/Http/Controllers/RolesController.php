@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Worktime;
+use App\Models\Roles;
 use Illuminate\Http\Request;
 
-class WorktimeController extends Controller
+class RolesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +13,6 @@ class WorktimeController extends Controller
     public function index()
     {
         //
-       
-        return view('worktime.index');
     }
 
     /**
@@ -36,7 +34,7 @@ class WorktimeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Worktime $worktime)
+    public function show(Roles $roles)
     {
         //
     }
@@ -44,7 +42,7 @@ class WorktimeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Worktime $worktime)
+    public function edit(Roles $roles)
     {
         //
     }
@@ -52,7 +50,7 @@ class WorktimeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Worktime $worktime)
+    public function update(Request $request, Roles $roles)
     {
         //
     }
@@ -60,7 +58,7 @@ class WorktimeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Worktime $worktime)
+    public function destroy(Roles $roles)
     {
         //
     }

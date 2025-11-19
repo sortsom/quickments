@@ -178,7 +178,8 @@
                                     <div class="dropdown-menu-columns">
                                         <div class="dropdown-menu-column">
                                             <a class="dropdown-item " href="{{ route('members.index') }}">សមាជិក</a>
-                                            <a class="dropdown-item " href=""> ម៉ោងធ្វើការ</a>
+                                            <a class="dropdown-item " href="{{ route('worktimes.index') }}">
+                                                ម៉ោងធ្វើការ</a>
                                         </div>
                                     </div>
                                 </div>

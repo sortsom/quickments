@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MemberController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LeaveTypeController;
+use App\Http\Controllers\WorktimeController;
+
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect('/dashboard');
@@ -21,6 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('members', MemberController::class);
     Route::resource('leave-types',LeaveTypeController::class);
+    Route::resource('worktimes',WorktimeController::class);
 
 });
 
