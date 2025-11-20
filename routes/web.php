@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MemberController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LeaveTypeController;
 use App\Http\Controllers\WorktimeController;
+use App\Models\Attendance;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -25,6 +27,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('leave-types',LeaveTypeController::class);
     Route::resource('worktimes',WorktimeController::class);
 
+
+
+    // Vannak
+    Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
+
 });
+
+
 
 require __DIR__.'/auth.php';
