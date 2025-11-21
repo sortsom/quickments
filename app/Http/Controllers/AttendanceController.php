@@ -12,7 +12,11 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        return view('attendances.index');
+        $data = Attendance::with(['member', 'details'])
+        ->orderBy('date', 'desc')
+        ->get();
+
+        return view('attendances.index',compact('data'));
     }
 
     /**
