@@ -9,9 +9,6 @@
     </style>
 
 
-
-
-
     <div class="page-header d-print-none" aria-label="Page header">
         <div class="container-xl">
             <div class="row g-2 align-items-center">
@@ -36,9 +33,9 @@
                     </div>
 
                     <!-- BEGIN MODAL -->
-                    {{-- <x-popup id="modal-add" title="បន្ថែមសមាជិកថ្មី">
-                        <x-members.add />
-                    </x-popup> --}}
+                    <x-popup id="modal-add" title="បង្កើតថ្មី">
+                        <x-attendances.add :members="$members" />
+                    </x-popup>
                     <!-- END MODAL -->
                 </div>
 
