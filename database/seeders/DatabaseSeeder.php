@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
         UserSeeder::class,
         WeeklySeeder::class,
         MemberSeeder::class,
-        StatusSeeder::class
+        StatusSeeder::class,
+        AttendanceSeeder::class,
     ]);
     }
 }

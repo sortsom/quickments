@@ -2,29 +2,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta20/dist/css/tabler.min.css">
     <link rel="stylesheet" href="css/style.css">
     <style>
-    .status-dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        display: inline-block;
-        margin-left: 4px;
-    }
-
-    .status-dot.late {
-        background-color: #d63939;
-        /* red */
-    }
-
-    .status-dot.early {
-        background-color: #2fb344;
-        /* green */
-    }
-
-    .status-dot.good {
-        background-color: #008cff;
-        /* blue */
+    .markdown>table thead th,
+    .table thead th {
+        font-size: 11pt;
     }
     </style>
+
+
+
+
+
     <div class="page-header d-print-none" aria-label="Page header">
         <div class="container-xl">
             <div class="row g-2 align-items-center">
@@ -61,24 +48,41 @@
     <div class="page-body">
         <div class="container-xl">
             <div class="col-12">
-                <!-- <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        const list = new List('table-', {
-                            sortClass: 'table-sort',
-                            listClass: 'table-tbody',
-                            valueNames: ['sort-name', 'sort-content', 'sort-status', 'sort-date', 'sort-tags',
-                                'sort-category'
-                            ]
-                        });
-                    })
-                </script> -->
+
                 <div class="card">
+                    @if(session('success'))
+                    <div class="alert alert-success" role="alert" id="success-alert"
+                        style="opacity:1; transition: opacity 0.5s;">
+                        <div class="alert-icon">
+                            <!-- Download SVG icon from http://tabler.io/icons/icon/check -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="icon alert-icon icon-2">
+                                <path d="M5 12l5 5l10 -10"></path>
+                            </svg>
+                        </div>
+                        {{ session('success') }}
+                    </div>
+
+                    <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const alertBox = document.getElementById('success-alert');
+                        if (alertBox) {
+                            // 2 seconds later, fade out
+                            setTimeout(() => {
+                                alertBox.style.opacity = '0';
+                                // remove from DOM after fade-out transition (0.5s)
+                                setTimeout(() => alertBox.remove(), 500);
+                            }, 2000);
+                        }
+                    });
+                    </script>
+                    @endif
                     <div class="card-table">
                         <div class="card-header">
                             <div class="row w-full align-items-center">
                                 <div class="col">
-                                    <h3 class="card-title mb-0">សមាជិក</h3>
-                                    <p class="text-secondary m-0">Table description.</p>
+
                                 </div>
 
                                 <div class="col-auto">
@@ -111,41 +115,29 @@
                                 <table class="table-vcenter table-selectable table">
                                     <thead>
                                         <tr>
-                                            <th class="w-1"></th>
-                                            <th>
-                                                <button class="table-sort d-flex justify-content-between"
-                                                    data-sort="sort-name">ព័ត៌មានបុគ្គលិក</button>
+                                            <th class="w-1">#</th>
+                                            <th class="text-center">
+                                                ព័ត៌មានបុគ្គលិក
                                             </th>
-                                            <th>
-                                                <button class="table-sort d-flex justify-content-between"
-                                                    data-sort="sort-position">ថ្ងៃខែឆ្នាំ</button>
+                                            <th class="text-center">
+                                                កាលបរិច្ឆេទ
                                             </th>
-                                            <th>
-                                                <button class="table-sort d-flex justify-content-between"
-                                                    data-sort="sort-name-kh">ម៉ោងចូល</button>
+                                            <th class="text-center">
+                                                ម៉ោងចូល
                                             </th>
-                                            <th>
-                                                <button class="table-sort d-flex justify-content-between"
-                                                    data-sort="sort-email">ម៉ោងចេញ</button>
+                                            <th class="text-center">
+                                                ម៉ោងចេញ
                                             </th>
-                                            <th>
-                                                <button class="table-sort d-flex justify-content-between"
-                                                    data-sort="sort-gender">ម៉ោងចូល</button>
+                                            <th class="text-center">
+                                                ម៉ោងចូល
                                             </th>
-                                            <th>
-                                                <button class="table-sort d-flex justify-content-between"
-                                                    data-sort="sort-dob">ម៉ោងចេញ</button>
+                                            <th class="text-center">
+                                                ម៉ោងចេញ
                                             </th>
-
-                                            <th>
-                                                <button class="table-sort d-flex justify-content-between"
-                                                    data-sort="sort-phone">Phone</button>
+                                            <th class="text-center">
+                                                ហេតុផល
                                             </th>
-                                            <th>
-                                                <button class="table-sort d-flex justify-content-between"
-                                                    data-sort="sort-status">Status</button>
-                                            </th>
-                                            <th class="text-end">Actions</th>
+                                            <th class="text-end">ផ្សេងៗ</th>
                                         </tr>
                                     </thead>
                                     <tbody class="table-tbody">
@@ -164,23 +156,35 @@
                                         $mo = $detail['morning_out'];
                                         $ai = $detail['afternoon_in'];
                                         $ao = $detail['afternoon_out'];
+
+                                        $statusColor = [
+                                        'good' => 'bg-success-lt',
+                                        'late' => 'bg-danger-lt',
+                                        'early' => 'bg-primary-lt',
+                                        ];
+
+
                                         @endphp
+
 
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
 
                                             {{-- Employee Info --}}
                                             <td>
-                                                <div class="user-block">
+                                                <div class="d-flex py-1 align-items-center">
                                                     <img src="{{ asset('storage/' . $att->member->photo) }}"
-                                                        class="img-circle" style="width:45px;height:45px">
-
-                                                    <span class="username">
-                                                        <a href="#">{{ $att->member->name }}</a>
-                                                    </span>
-                                                    <br>
-                                                    <span class="description">{{ $att->member->gender }}</span><br>
-                                                    <span class="description">{{ $att->member->position }}</span>
+                                                        class="img-circle avatar avatar-2 me-2"
+                                                        style="width:45px;height:45px">
+                                                    <div class="flex-fill">
+                                                        <div class="font-weight-medium">{{ $att->member->name }}</div>
+                                                        <div class="text-secondary">
+                                                            <span
+                                                                class="description">{{ ucfirst($att->member->gender) }}</span><br>
+                                                            <span
+                                                                class="description">{{ $att->member->position }}</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </td>
 
@@ -191,9 +195,10 @@
                                             <td>
                                                 <p>
                                                     {{ $mi->clock ?? '---' }}
-                                                    @if($mi)
-                                                    <span class="status-dot {{ strtolower($mi->status) }}"></span>
-                                                    @endif
+                                                    <span
+                                                        class="badge {{ $statusColor[strtolower($mi->status ?? '')] ?? 'bg-secondary-lt'}}">
+                                                        {{ $mi->status ?? '---' }}
+                                                    </span>
                                                 </p>
                                                 <p class="text-secondary">Time: {{ $att->start_time }}</p>
                                             </td>
@@ -202,57 +207,62 @@
                                             <td>
                                                 <p>
                                                     {{ $mo->clock ?? '---' }}
-                                                    @if($mo)
-                                                    <span class="status-dot {{ strtolower($mo->status) }}"></span>
-                                                    @endif
+                                                    <span
+                                                        class="badge {{$statusColor[strtolower($mo->status ?? '')] ?? 'bg-secondary-lt'}}">
+                                                        {{ $mo->status ?? '---' }}
+                                                    </span>
                                                 </p>
                                                 <p class="text-secondary">Time: {{ $att->end_time }}</p>
                                             </td>
 
-                                            {{-- Afternoon In --}}
+                                            {{-- Afternoon --}}
+                                            @if ($att->details->count() > 2)
+
                                             <td>
                                                 <p>
                                                     {{ $ai->clock ?? '---' }}
-                                                    @if($ai)
-                                                    <span class="status-dot {{ strtolower($ai->status) }}"></span>
-                                                    @endif
+                                                    <span
+                                                        class="badge {{$statusColor[strtolower($ai->status ?? '')] ?? 'bg-secondary-lt'}}">
+                                                        {{ $ai->status ?? '---' }}
+                                                    </span>
                                                 </p>
                                                 <p class="text-secondary">Time: {{ $att->start_time2 }}</p>
                                             </td>
 
-                                            {{-- Afternoon Out --}}
                                             <td>
                                                 <p>
                                                     {{ $ao->clock ?? '---' }}
-                                                    @if($ao)
-                                                    <span class="status-dot {{ strtolower($ao->status) }}"></span>
-                                                    @endif
+                                                    <span
+                                                        class="badge {{ $statusColor[strtolower($ao->status ?? '')] ?? 'bg-secondary-lt' }}">
+                                                        {{ $ao->status ?? '---' }}
+                                                    </span>
                                                 </p>
                                                 <p class="text-secondary">Time: {{ $att->end_time2 }}</p>
                                             </td>
+                                            @else
 
-                                            {{-- Phone --}}
-                                            <td>{{ $att->member->phone }}</td>
-
-                                            {{-- Status (overall) --}}
-                                            <td>
-                                                @if($mo && strtolower($mo->status) == 'late')
-                                                <span class="badge bg-red">Late</span>
-                                                @elseif($mo && strtolower($mo->status) == 'early')
-                                                <span class="badge bg-green">Early</span>
-                                                @else
-                                                <span class="badge bg-blue">Good</span>
-                                                @endif
+                                            <td colspan="2">
+                                                <p class="text-secondary">No Work</p>
                                             </td>
 
+                                            @endif
+                                            {{-- Reason --}}
+                                            <td class="text-secondary">
+                                                {{ $mi->reason ?? $mo->reason ?? $ai->reason ?? $ao->reason ?? '' }}
+                                            </td>
                                             <td class="text-end">
-                                                <button class="btn btn-sm btn-success">Edit</button>
-                                                <button class="btn btn-sm btn-danger">Delete</button>
+                                                <a class="btn btn-sm btn-success">Edit</a>
+                                                <form action="{{ route('attendance.destroy', $att->id) }}" method="POST"
+                                                    style="display:inline-block;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger"
+                                                        onclick="return confirm('Are you sure you want to delete this record?')">Delete</button>
+                                                </form>
                                             </td>
-
                                         </tr>
-
                                         @endforeach
+
                                     </tbody>
 
 
@@ -264,7 +274,7 @@
                                         <span id="page-count" class="me-1">10</span>
                                         <span>records</span>
                                     </a>
-                                    <div class="dropdown-menu" style="">
+                                    <div class="dropdown-menu">
                                         <a class="dropdown-item" onclick="setPageListItems(event)" data-value="10">10
                                             records</a>
                                         <a class="dropdown-item" onclick="setPageListItems(event)" data-value="20">20
@@ -291,30 +301,9 @@
                 <script>
                 const advancedTable = {
                     headers: [{
-                            "data-sort": "sort-name",
-                            name: "Name"
-                        },
-                        {
-                            "data-sort": "sort-email",
-                            name: "Email"
-                        },
-                        {
-                            "data-sort": "sort-status",
-                            name: "Status"
-                        },
-                        {
-                            "data-sort": "sort-date",
-                            name: "Start date"
-                        },
-                        {
-                            "data-sort": "sort-tags",
-                            name: "Tags"
-                        },
-                        {
-                            "data-sort": "sort-category",
-                            name: "Category"
-                        },
-                    ],
+                        "data-sort": "sort-name",
+                        name: "Name"
+                    }, ],
                 };
                 const setPageListItems = (e) => {
                     window.tabler_list["advanced-table"].page = parseInt(e.target.dataset.value);
@@ -326,7 +315,7 @@
                     const list = (window.tabler_list["advanced-table"] = new List("advanced-table", {
                         sortClass: "table-sort",
                         listClass: "table-tbody",
-                        page: parseInt("20"),
+                        page: parseInt("10"),
                         pagination: {
                             item: (value) => {
                                 return `<li class="page-item"><a class="page-link cursor-pointer">${value.page}</a></li>`;
