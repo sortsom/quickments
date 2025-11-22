@@ -15,4 +15,8 @@ class AttendanceDetail extends Model
         'reason',
         'count_time',
     ];
+     public function attendance()
+    {
+        return $this->belongsTo(Attendance::class);
+    }
 }

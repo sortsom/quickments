@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Member;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
 
@@ -12,15 +12,20 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        //
+        $data = Attendance::with(['member', 'details'])
+        ->orderBy('date', 'desc')
+        ->get();
+        $members = Member::all();
+        return view('attendances.index', compact('data', 'members'));
+
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
@@ -60,6 +65,7 @@ class AttendanceController extends Controller
      */
     public function destroy(Attendance $attendance)
     {
-        //
+        $attendance->delete();
+        return redirect()->route('attendance.index')->with('success', 'Attendance deleted successfully.');
     }
 }

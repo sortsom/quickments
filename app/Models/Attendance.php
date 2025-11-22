@@ -17,4 +17,13 @@ class Attendance extends Model
         'status',
         'half_time',
     ];
+    public function details()
+    {
+        return $this->hasMany(AttendanceDetail::class);
+    }
+
+    public function member()
+    {
+        return $this->belongsTo(Member::class);
+    }
 }

@@ -13,7 +13,7 @@ class Holidays extends Seeder
     public function run(): void
     {
         //
-$holidays = [
+        $holidays = [
             ['id' => 1, 'date' => '2025-01-01', 'description' => 'ទិវាចូលឆ្នាំសាកល'],
             ['id' => 2, 'date' => '2025-01-07', 'description' => 'ទិវាជ័យជំនះលើរបបប្រល័យពូជសាសន៍'],
             ['id' => 3, 'date' => '2025-03-08', 'description' => 'ទិវានារីអន្ដរជាតិ'],

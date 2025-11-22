@@ -17,89 +17,25 @@
         </div>
         <!-- END NAVBAR LOGO -->
         <div class="navbar-nav flex-row order-md-last">
-            <!-- Theme Toggle -->
-            <div class="nav-item d-none d-md-flex">
-                <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" aria-label="Enable dark mode" data-bs-original-title="Enable dark mode">
-                    <!-- Moon Icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="icon icon-1">
-                        <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z">
-                        </path>
-                    </svg>
-                </a>
-                <a href="?theme=light" class="nav-link px-0 hide-theme-light" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" aria-label="Enable light mode"
-                    data-bs-original-title="Enable light mode">
-                    <!-- Sun Icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="icon icon-1">
-                        <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
-                        <path
-                            d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7">
-                        </path>
-                    </svg>
-                </a>
-            </div>
 
-            <!-- Notifications (Visible on all screen sizes) -->
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" aria-label="Show notifications"
-                    data-bs-auto-close="outside">
-                    <!-- Bell Icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="icon icon-1">
-                        <path
-                            d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6">
-                        </path>
-                        <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
-                    </svg>
-                    <span class="badge bg-red"></span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card">
-                    <!-- Notification Card -->
-                    <div class="card">
-                        <div class="card-header d-flex">
-                            <h3 class="card-title">Notifications</h3>
-                            <div class="btn-close ms-auto" data-bs-dismiss="dropdown"></div>
-                        </div>
-                        <div class="list-group list-group-flush list-group-hoverable">
-                            <!-- Notification Items (Example 1–4) -->
-                            <!-- Repeatable block omitted for brevity -->
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col"><a href="#" class="btn btn-2 w-100">Archive all</a></div>
-                                <div class="col"><a href="#" class="btn btn-2 w-100">Mark all as read</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- User Menu -->
             <div class="nav-item dropdown">
-                <a href="#" class="nav-link d-flex lh-1 p-0 px-2" data-bs-toggle="dropdown"
-                    aria-label="Open user menu">
-                    <span class="avatar avatar-sm" style="background-image: url(./images/profile.jpg)"></span>
+                <a href="#" class="nav-link d-flex lh-1 p-0 px-2" data-bs-toggle="dropdown" aria-label="Open user menu">
+                    <span class="avatar avatar-sm"
+                        style="background-image: url({{ Auth::user()->photo ? asset('storage/' . Auth::user()->photo) : 'storage/default.png' }})"></span>
                     <div class="d-none d-xl-block ps-2">
-                        <div>Sort Som</div>
-                        <div class="mt-1 small text-secondary">UI Designer</div>
+                        <div>{{ Auth::user()->name }}</div>
+                        <div class="mt-1 small text-secondary">
+                            {{ Auth::user()->role->role ?? 'no-role' }}
+                        </div>
                     </div>
+
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <a href="#" class="dropdown-item">Status</a>
                     <a href="./profile.html" class="dropdown-item">Profile</a>
-                    <a href="#" class="dropdown-item">Feedback</a>
 
                     <div class="dropdown-divider"></div>
-
-                    <a href="./settings.html" class="dropdown-item">Settings</a>
-
                     <!-- Authentication -->
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
@@ -125,22 +61,27 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="./">
                                     <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <x-icon.home /></span>
+                                        <x-icon.home />
+                                    </span>
                                     <span class="nav-link-title" id="khmer">ផ្ទាំងដើម </span>
                                 </a>
                             </li>
+                            @if (in_array(Auth::user()->role->role, ['owner','admin']))
                             <li class="nav-item">
-                                <a class="nav-link" href="">
+                                <a class="nav-link" href="{{route('attendance.index')}}">
                                     <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <x-icon.stock /></span>
+                                        <x-icon.stock />
+                                    </span>
                                     <span class="nav-link-title" id="khmer">កត់ត្រាវត្តមាន </span>
                                 </a>
                             </li>
+                            @endif
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#navbar-form" data-bs-toggle="dropdown"
                                     data-bs-auto-close="outside" role="button" aria-expanded="false">
                                     <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <x-icon.prochese /></span>
+                                        <x-icon.prochese />
+                                    </span>
                                     <span class="nav-link-title" id="khmer"> សុំច្បាប់ </span>
                                 </a>
                                 <div class="dropdown-menu">
@@ -197,19 +138,17 @@
                                     <a class="dropdown-item" href="./colorpicker.html">របាយការណ៍</a>
                                 </div>
                             </li> --}}
+                            @if (Auth::user()->role->role === 'owner')
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#navbar-addons" data-bs-toggle="dropdown"
-                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
+
+                                <a class="nav-link" href="">
                                     <span class="nav-link-icon d-md-none d-lg-inline-block">
                                         <x-icon.user />
                                     </span>
-                                    <span class="nav-link-title" id="khmer">តួនាទីអ្នកប្រើប្រាស់</span>
+                                    <span class="nav-link-title" id="khmer">បញ្ជីអ្នកប្រើប្រាស់ </span>
                                 </a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="./icons.html">កំណត់សិទ្ធិ</a>
-                                    <a class="dropdown-item" href="./emails.html">មុខងារ</a>
-                                </div>
                             </li>
+                            @endif
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown"
                                     data-bs-auto-close="outside" role="button" aria-expanded="false">
@@ -229,8 +168,8 @@
                                         target="_blank" rel="noopener">
                                         <!-- Download SVG icon from http://tabler.io/icons/icon/heart -->
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
                                             class="icon icon-inline me-1 icon-2">
                                             <path
                                                 d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572">

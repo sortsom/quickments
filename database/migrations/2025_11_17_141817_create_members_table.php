@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->string('status')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }
@@ -33,5 +34,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('members');
+
     }
 };
