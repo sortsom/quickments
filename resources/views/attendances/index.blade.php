@@ -312,7 +312,7 @@
                     const list = (window.tabler_list["advanced-table"] = new List("advanced-table", {
                         sortClass: "table-sort",
                         listClass: "table-tbody",
-                        page: parseInt("10"),
+                        page: parseInt("5"),
                         pagination: {
                             item: (value) => {
                                 return `<li class="page-item"><a class="page-link cursor-pointer">${value.page}</a></li>`;
