@@ -21,7 +21,8 @@
 
             <!-- User Menu -->
             <div class="nav-item dropdown">
-                <a href="#" class="nav-link d-flex lh-1 p-0 px-2" data-bs-toggle="dropdown" aria-label="Open user menu">
+                <a href="#" class="nav-link d-flex lh-1 p-0 px-2" data-bs-toggle="dropdown"
+                    aria-label="Open user menu">
                     <span class="avatar avatar-sm"
                         style="background-image: url({{ Auth::user()->photo ? asset('storage/' . Auth::user()->photo) : 'storage/default.png' }})"></span>
                     <div class="d-none d-xl-block ps-2">
@@ -66,15 +67,15 @@
                                     <span class="nav-link-title" id="khmer">ផ្ទាំងដើម </span>
                                 </a>
                             </li>
-                            @if (in_array(Auth::user()->role->role, ['owner','admin']))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('attendance.index')}}">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <x-icon.stock />
-                                    </span>
-                                    <span class="nav-link-title" id="khmer">កត់ត្រាវត្តមាន </span>
-                                </a>
-                            </li>
+                            @if (in_array(Auth::user()->role->role, ['owner', 'admin']))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('attendance.index') }}">
+                                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                            <x-icon.stock />
+                                        </span>
+                                        <span class="nav-link-title" id="khmer">កត់ត្រាវត្តមាន </span>
+                                    </a>
+                                </li>
                             @endif
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#navbar-form" data-bs-toggle="dropdown"
@@ -139,15 +140,15 @@
                                 </div>
                             </li> --}}
                             @if (Auth::user()->role->role === 'owner')
-                            <li class="nav-item dropdown">
+                                <li class="nav-item dropdown">
 
-                                <a class="nav-link" href="">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <x-icon.user />
-                                    </span>
-                                    <span class="nav-link-title" id="khmer">បញ្ជីអ្នកប្រើប្រាស់ </span>
-                                </a>
-                            </li>
+                                    <a class="nav-link" href="">
+                                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                            <x-icon.user />
+                                        </span>
+                                        <span class="nav-link-title" id="khmer">បញ្ជីអ្នកប្រើប្រាស់ </span>
+                                    </a>
+                                </li>
                             @endif
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown"
@@ -168,8 +169,8 @@
                                         target="_blank" rel="noopener">
                                         <!-- Download SVG icon from http://tabler.io/icons/icon/heart -->
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                             class="icon icon-inline me-1 icon-2">
                                             <path
                                                 d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572">
@@ -185,11 +186,8 @@
                     <div class="col col-md-auto">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="#" data-bs-toggle="offcanvas"
-                                    data-bs-target="#offcanvasSettings">
-
+                                <a class="nav-link" href="{{ route('settings.index') }}">
                                     <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <!-- Download SVG icon from http://tabler.io/icons/icon/settings -->
                                         <x-icon.setting />
                                     </span>
                                     <span class="nav-link-title" id="khmer">កំណត់</span>
