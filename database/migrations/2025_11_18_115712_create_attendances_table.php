@@ -16,11 +16,12 @@ return new class extends Migration
             $table->unsignedBigInteger('member_id');
             $table->time('start_time');
             $table->time('end_time');
-            $table->time('start_time2');
-            $table->time('end_time2');
+            $table->time('start_time2')->nullable();
+            $table->time('end_time2')->nullable();
             $table->date('date');
             $table->string('status');
             $table->integer('half_time');
+            $table->tinyInteger('half_time')->default(0);
             $table->timestamps();
         });
     }

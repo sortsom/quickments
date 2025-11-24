@@ -32,7 +32,9 @@ Route::middleware('auth')->group(function () {
     // Vannak
     Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
     Route::delete('/attendance/{attendance}', [AttendanceController::class, 'destroy'])->name('attendance.destroy');
-    Route::post('/attendance', [AttendanceController::class, 'create'])->name('attendance.create');
+    Route::post('/attendance', [AttendanceController::class, 'store'])->name('attendance.store');
+    Route::put('/attendance/{attendance}', [AttendanceController::class, 'update'])->name('attendance.update');
+
 
 
 });

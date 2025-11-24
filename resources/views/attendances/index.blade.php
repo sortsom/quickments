@@ -248,16 +248,36 @@
                                                 {{ $mi->reason ?? $mo->reason ?? $ai->reason ?? $ao->reason ?? '' }}
                                             </td>
                                             <td class="text-end">
-                                                <a class="btn btn-sm btn-success">Edit</a>
+
+                                                <!-- Edit Button -->
+                                                <a href="#" class="btn btn-1 btn-icon bg-info text-white"
+                                                    aria-label="Edit" data-bs-toggle="modal"
+                                                    data-bs-target="#edit-{{ $att->id }}">
+                                                    <x-icon.edit />
+                                                </a>
+
+                                                <!-- Delete Button -->
                                                 <form action="{{ route('attendance.destroy', $att->id) }}" method="POST"
-                                                    style="display:inline-block;">
+                                                    style="display:inline-block;"
+                                                    onsubmit="return confirm('Are you sure you want to delete this record?')">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-danger"
-                                                        onclick="return confirm('Are you sure you want to delete this record?')">Delete</button>
+
+                                                    <button type="submit"
+                                                        class="btn btn-1 btn-icon bg-danger text-white"
+                                                        aria-label="Delete">
+                                                        <x-icon.trash />
+                                                    </button>
                                                 </form>
+
                                             </td>
+
                                         </tr>
+                                        <!-- BEGIN EDIT MODAL -->
+                                        <x-popup id="edit-{{ $att->id }}" title="កែប្រែវត្តមាន">
+                                            <x-attendances.edit :members="$members" :att="$att" />
+                                        </x-popup>
+                                        <!-- END EDIT MODAL -->
                                         @endforeach
 
                                     </tbody>
@@ -272,24 +292,24 @@
                                         <span>records</span>
                                     </a>
                                     <div class="dropdown-menu">
+                                        <a class="dropdown-item" onclick="setPageListItems(event)" data-value="5">5
+                                            records</a>
                                         <a class="dropdown-item" onclick="setPageListItems(event)" data-value="10">10
                                             records</a>
                                         <a class="dropdown-item" onclick="setPageListItems(event)" data-value="20">20
                                             records</a>
                                         <a class="dropdown-item" onclick="setPageListItems(event)" data-value="50">50
                                             records</a>
-                                        <a class="dropdown-item" onclick="setPageListItems(event)" data-value="100">100
-                                            records</a>
                                     </div>
                                 </div>
                                 <ul class="pagination m-0 ms-auto">
                                     <li class="page-item active"><a class="page-link cursor-pointer" data-i="1"
-                                            data-page="10">1</a></li>
+                                            data-page="5">1</a></li>
                                     <li class="page-item"><a class="page-link cursor-pointer" data-i="2"
-                                            data-page="10">2</a></li>
+                                            data-page="5">2</a></li>
                                     <li class="page-item disabled"><a class="page-link cursor-pointer">...</a></li>
                                     <li class="page-item"><a class="page-link cursor-pointer" data-i="14"
-                                            data-page="10">14</a></li>
+                                            data-page="5">14</a></li>
                                 </ul>
                             </div>
                         </div>
