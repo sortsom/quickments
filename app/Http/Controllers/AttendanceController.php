@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Member;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
-use Carbon\Carbon;  // ✔ MUST ADD THIS
-
+use Carbon\Carbon;  
 use App\Models\AttendanceDetail;
 use App\Models\Worktime;
 
@@ -40,28 +39,49 @@ class AttendanceController extends Controller
 
         $current = $startDate;
 
+        $results = [];
+        $insertedCount = 0;
+        $skippedCount  = 0;
+
         while ($current->lte($endDate)) {
 
             $date = $current->format('Y-m-d');
 
-            // Skip duplicate dates
+            // Check duplicate date
             if (Attendance::where('member_id', $memberId)->where('date', $date)->exists()) {
+
+                $results[] = [
+                    'date' => $date,
+                    'status' => 'Skipped',
+                    'reason' => 'Duplicate attendance found'
+                ];
+
+                $skippedCount++;
                 $current->addDay();
                 continue;
             }
 
-            // Worktime based on day of week (Laravel Sunday = 0)
-            $dayOfWeek = $current->dayOfWeek + 1; // Your system uses 1–7
+            // Worktime
+            $dayOfWeek = $current->dayOfWeek + 1;
+
             $worktime = Worktime::where('member_id', $memberId)
                                 ->where('day', $dayOfWeek)
                                 ->first();
 
             if (!$worktime) {
+
+                $results[] = [
+                    'date' => $date,
+                    'status' => 'Skipped',
+                    'reason' => 'No worktime found for this weekday'
+                ];
+
+                $skippedCount++;
                 $current->addDay();
                 continue;
             }
 
-            // Create main attendance record
+            // Insert attendance
             $attendance = Attendance::create([
                 'member_id'   => $memberId,
                 'start_time'  => $worktime->start_time,
@@ -73,15 +93,23 @@ class AttendanceController extends Controller
                 'half_time'   => $worktime->half_day
             ]);
 
-            // Determine which check types apply
+            $results[] = [
+                'date' => $date,
+                'status' => 'Inserted',
+                'reason' => 'Attendance created successfully',
+                'attendance_id' => $attendance->id
+            ];
+
+            $insertedCount++;
+
+            // Details...
             $details = ($worktime->half_day == 1)
                 ? [1 => $request->time1, 2 => $request->time2]
                 : [1 => $request->time1, 2 => $request->time2, 3 => $request->time3, 4 => $request->time4];
 
             foreach ($details as $type => $clock) {
-
-                if (!$clock) continue; // avoid null errors
-
+                if (!$clock) continue;
+               
                 $clockTime = Carbon::parse($clock);
 
                 // Determine correct worktime field
@@ -123,14 +151,23 @@ class AttendanceController extends Controller
                     'reason'        => $request->reason,
                     'count_time'    => abs($count)
                 ]);
+            
             }
 
             $current->addDay();
         }
 
-        return redirect()->route('attendance.index')
-                        ->with('success', 'Attendance inserted successfully.');
+        // Add summary to results
+        $summary = [
+            'inserted' => $insertedCount,
+            'skipped'  => $skippedCount,
+            'total_days' => $insertedCount + $skippedCount,
+        ];
 
+        return redirect()->route('attendance.index')
+                        ->with('success', 'Attendance insert process complete.')
+                        ->with('log', $results)
+                        ->with('summary', $summary);
 
     }
 
@@ -266,4 +303,6 @@ class AttendanceController extends Controller
         $attendance->delete();
         return redirect()->route('attendance.index')->with('success', 'Attendance deleted successfully.');
     }
+
+    
 }

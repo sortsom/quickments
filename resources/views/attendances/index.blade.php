@@ -47,34 +47,15 @@
             <div class="col-12">
 
                 <div class="card">
-                    @if(session('success'))
-                    <div class="alert alert-success" role="alert" id="success-alert"
-                        style="opacity:1; transition: opacity 0.5s;">
-                        <div class="alert-icon">
-                            <!-- Download SVG icon from http://tabler.io/icons/icon/check -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="icon alert-icon icon-2">
-                                <path d="M5 12l5 5l10 -10"></path>
-                            </svg>
-                        </div>
-                        {{ session('success') }}
-                    </div>
 
-                    <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        const alertBox = document.getElementById('success-alert');
-                        if (alertBox) {
-                            // 2 seconds later, fade out
-                            setTimeout(() => {
-                                alertBox.style.opacity = '0';
-                                // remove from DOM after fade-out transition (0.5s)
-                                setTimeout(() => alertBox.remove(), 500);
-                            }, 2000);
-                        }
-                    });
-                    </script>
-                    @endif
+
+
+
+                    <x-alert-messege />
+
+
+
+
                     <div class="card-table">
                         <div class="card-header">
                             <div class="row w-full align-items-center">
