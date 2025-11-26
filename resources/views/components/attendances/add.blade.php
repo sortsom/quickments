@@ -40,15 +40,17 @@
 
             <div class="mb-3">
                 <label class="form-label">ម៉ោងចូលព្រឹក</label>
-                <input id="timepicker" class="form-control" type="text" placeholder="Select time" name="time1">
+                <input type="time" class="form-control" name="time1" value="07:00">
+                
             </div>
+            
 
         </div>
         <div class="col-6">
 
             <div class="mb-3">
                 <label class="form-label">ម៉ោងចេញព្រឹក</label>
-                <input id="timepicker" class="form-control" type="text" placeholder="Select time" name="time2">
+                <input type="time" class="form-control" name="time2" value="12:00">
             </div>
 
         </div>
@@ -58,7 +60,7 @@
 
             <div class="mb-3">
                 <label class="form-label">ម៉ោងចូលរសៀល</label>
-                <input id="timepicker" class="form-control" type="text" placeholder="Select time" name="time3">
+                <input type="time" class="form-control" name="time3" value="14:00">
             </div>
 
         </div>
@@ -66,7 +68,7 @@
 
             <div class="mb-3">
                 <label class="form-label">ម៉ោងម៉ោងរសៀល</label>
-                <input id="timepicker" class="form-control" type="text" placeholder="Select time" name="time4">
+                <input type="time" class="form-control" name="time4" value="18:00">
             </div>
 
         </div>

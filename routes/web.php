@@ -29,10 +29,14 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('members', MemberController::class);
     Route::resource('leave-types',LeaveTypeController::class);
+<<<<<<< HEAD
     Route::resource('worktimes',WorktimeController::class);
     Route::resource('settings',SettingsController::class);
     Route::resource('requestleave',RequestLeaveController::class);
     Route::resource('overtime',OvertimeWorkController::class);
+=======
+
+>>>>>>> 4ee4eef (modify worktime)
 
 
     // Vannak

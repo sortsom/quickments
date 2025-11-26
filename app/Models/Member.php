@@ -28,5 +28,9 @@ class Member extends Model
     {
         return $this->belongsTo(User::class);
     }
+      public function worktimes()
+    {
+        return $this->hasMany(Worktime::class, 'member_id');
+    }
     
 }

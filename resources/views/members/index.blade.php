@@ -168,6 +168,7 @@
 
 
 
+
                                                 <a href="#" class="btn btn-1 btn-icon bg-info text-white"
                                                     aria-label="Edit" data-bs-toggle="modal"
                                                     data-bs-target="#edit-{{ $member->id }}">
