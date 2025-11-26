@@ -57,9 +57,7 @@
                             </div>
                         </div>
                     </div>
-                    @foreach ($worktimes as $worktime)
-                    {{ $worktime }}
-                    @endforeach
+
 
                     <div class="col-md-12 mt-2">
                         <div class="card">
@@ -101,22 +99,31 @@
                                         <h4>ម៉ោងតាមថ្ងៃ</h4>
                                         <div>
                                             <div class="row">
-                                                @foreach($worktimes as $wt)
+                                                @foreach($weekdays as $day)
+                                                @php
+                                                $wt = $worktimes[$day->id] ?? null;
+                                                @endphp
+
                                                 <div class="col-md-6 mb-3">
                                                     <div class="card">
                                                         <div
                                                             class="card-header d-flex justify-content-between align-items-center">
-                                                            <strong>{{ $wt->weekly->name }}</strong>
+                                                            <strong>{{ $day->name }}</strong>
+
                                                             <div>
+                                                                {{-- Half day checkbox --}}
                                                                 <label class="form-check form-check-inline">
-                                                                    <input class="form-check-input" type="checkbox"
-                                                                        name="days[{{ $wt->week_id }}][half_day]"
-                                                                        {{ $wt->half_day == 1 ? 'checked' : '' }}>
+                                                                    <input type="checkbox" class="form-check-input"
+                                                                        name="days[{{ $day->id }}][half_day]"
+                                                                        {{ $wt && $wt->half_day == 1 ? 'checked' : '' }}>
                                                                     <span class="form-check-label">Half day</span>
                                                                 </label>
+
+                                                                {{-- Work checkbox --}}
                                                                 <label class="form-check form-check-inline ms-2">
-                                                                    <input class="form-check-input" type="checkbox"
-                                                                        name="days[{{ $wt->week_id }}][work]" checked>
+                                                                    <input type="checkbox" class="form-check-input"
+                                                                        name="days[{{ $day->id }}][work]"
+                                                                        {{ $wt ? 'checked' : '' }}>
                                                                     <span class="form-check-label">Work</span>
                                                                 </label>
                                                             </div>
@@ -127,14 +134,14 @@
                                                                 <div class="col-6">
                                                                     <label class="form-label">Start Time *</label>
                                                                     <input type="time" class="form-control"
-                                                                        name="days[{{ $wt->week_id }}][start_time]"
-                                                                        value="{{ $wt->start_time }}">
+                                                                        name="days[{{ $day->id }}][start_time]"
+                                                                        value="{{ $wt->start_time ?? '' }}">
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <label class="form-label">End Time *</label>
                                                                     <input type="time" class="form-control"
-                                                                        name="days[{{ $wt->week_id }}][end_time]"
-                                                                        value="{{ $wt->end_time }}">
+                                                                        name="days[{{ $day->id }}][end_time]"
+                                                                        value="{{ $wt->end_time ?? '' }}">
                                                                 </div>
                                                             </div>
 
@@ -142,28 +149,75 @@
                                                                 <div class="col-6">
                                                                     <label class="form-label">Start Time 2</label>
                                                                     <input type="time" class="form-control"
-                                                                        name="days[{{ $wt->week_id }}][start_time2]"
+                                                                        name="days[{{ $day->id }}][start_time2]"
                                                                         value="{{ $wt->start_time2 ?? '' }}">
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <label class="form-label">End Time 2</label>
                                                                     <input type="time" class="form-control"
-                                                                        name="days[{{ $wt->week_id }}][end_time2]"
+                                                                        name="days[{{ $day->id }}][end_time2]"
                                                                         value="{{ $wt->end_time2 ?? '' }}">
                                                                 </div>
                                                             </div>
+
+                                                            @if($wt)
+                                                            <input type="hidden" name="days[{{ $day->id }}][id]"
+                                                                value="{{ $wt->id }}">
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </div>
                                                 @endforeach
                                             </div>
+
                                         </div>
                                     </div>
                                     <div class="tab-pane" id="tabs-profile-3" role="tabpanel">
                                         <h4>ម៉ោងរួម</h4>
-                                        <div>
-                                            Fringilla egestas nunc quis tellus diam rhoncus ultricies tristique enim at
-                                            diam, sem nunc amet, pellentesque id egestas velit sed
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="row mb-3">
+                                                            <div class="col-6">
+                                                                <label class="form-label">Start Time</label>
+                                                                <input type="time" class="form-control">
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class="form-label">End Time</label>
+                                                                <input type="time" class="form-control">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <label class="form-label">Start Time 2</label>
+                                                                <input type="time" class="form-control">
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class="form-label">End Time 2</label>
+                                                                <input type="time" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+                                                <div class="row">
+                                                    @foreach($weekdays as $day)
+
+                                                    <div class="col-md-2">
+                                                        <label class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                name="day[]">
+                                                            <span class="form-check-label">{{ $day->name_kh }}</span>
+                                                        </label>
+
+                                                    </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -178,8 +232,10 @@
     </div>
 
 
-
-
+    <!-- 
+    @foreach ($worktimes as $worktime)
+    {{ $worktime }}
+    @endforeach -->
 
 
     <script>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Worktime;
 use Illuminate\Http\Request;
 use App\Models\Member;
+use App\Models\Weekly;
 
 class WorktimeController extends Controller
 {
@@ -17,12 +18,17 @@ class WorktimeController extends Controller
        
         return view('worktime.index');
     }
+
     public function memberWorktime(Member $member)
     {
-        $worktimes = $member->worktimes()->with('weekly')->orderBy('week_id')->get();
-        
-        return view('worktime.index', compact('member', 'worktimes'));
+        $weekdays = Weekly::orderBy('sort')->get();
+
+        // Worktime keyed by week_id for fast access
+        $worktimes = $member->worktimes()->with('weekly')->get()->keyBy('week_id');
+
+        return view('worktime.index', compact('member', 'weekdays', 'worktimes'));
     }
+
 
 
 
