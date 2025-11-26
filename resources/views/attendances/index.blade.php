@@ -17,6 +17,7 @@
                     <!-- <div class="page-pretitle">កត់ត្រាវត្តមាន</div> -->
                     <h3>កត់ត្រាវត្តមាន</h3>
                 </div>
+                @if (in_array(Auth::user()->role->role, ['owner','admin']))
                 <div class="d-print-none col-auto ms-auto">
                     <div class="btn-list">
                         <a href="#" class="btn btn-primary btn-5 d-none d-sm-inline-flex align-items-center"
@@ -37,8 +38,9 @@
                         <x-attendances.add :members="$members" />
                     </x-popup>
                     <!-- END MODAL -->
-                </div>
 
+                </div>
+                @endif
             </div>
         </div>
     </div>
@@ -115,7 +117,9 @@
                                             <th class="text-center">
                                                 ហេតុផល
                                             </th>
+                                            @if (in_array(Auth::user()->role->role, ['owner','admin']))
                                             <th class="text-end">ផ្សេងៗ</th>
+                                            @endif
                                         </tr>
                                     </thead>
                                     <tbody class="table-tbody">
@@ -228,6 +232,7 @@
                                             <td class="text-secondary">
                                                 {{ $mi->reason ?? $mo->reason ?? $ai->reason ?? $ao->reason ?? '' }}
                                             </td>
+                                            @if (in_array(Auth::user()->role->role, ['owner','admin']))
                                             <td class="text-end">
 
                                                 <!-- Edit Button -->
@@ -250,8 +255,8 @@
                                                         <x-icon.trash />
                                                     </button>
                                                 </form>
-
                                             </td>
+                                            @endif
 
                                         </tr>
                                         <!-- BEGIN EDIT MODAL -->
@@ -269,7 +274,7 @@
                             <div class="card-footer d-flex align-items-center">
                                 <div class="dropdown">
                                     <a class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span id="page-count" class="me-1">10</span>
+                                        <span id="page-count" class="me-1">5</span>
                                         <span>records</span>
                                     </a>
                                     <div class="dropdown-menu">

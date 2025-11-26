@@ -66,7 +66,7 @@
                                     <span class="nav-link-title" id="khmer">ផ្ទាំងដើម </span>
                                 </a>
                             </li>
-                            @if (in_array(Auth::user()->role->role, ['owner','admin']))
+
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('attendance.index')}}">
                                     <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -75,7 +75,6 @@
                                     <span class="nav-link-title" id="khmer">កត់ត្រាវត្តមាន </span>
                                 </a>
                             </li>
-                            @endif
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#navbar-form" data-bs-toggle="dropdown"
                                     data-bs-auto-close="outside" role="button" aria-expanded="false">
@@ -86,27 +85,13 @@
                                 </a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="./form-elements.html">ស្មើរសុំច្បាប់</a>
+                                    @if (in_array(Auth::user()->role->role, ['owner','admin']))
                                     <a class="dropdown-item" href="{{ route('leave-types.index') }}">ប្រភេទច្បាប់</a>
                                     <a class="dropdown-item" href="./form-elements.html">ច្បាប់លើសកំណត់</a>
+                                    @endif
                                 </div>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown"
-                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <x-icon.calendar />
-                                    </span>
-                                    <span class="nav-link-title" id="khmer"> ធ្វើការថែមម៉ោង </span>
-                                </a>
-                                <div class="dropdown-menu">
-                                    <div class="dropdown-menu-columns">
-                                        <div class="dropdown-menu-column">
-                                            <a class="dropdown-item " href="">ស្នើរសុំធ្វើការថែមម៉ោង</a>
-                                            <a class="dropdown-item" href="./chat.html"> របាយការណ៍ </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
+
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown"
                                     data-bs-auto-close="outside" role="button" aria-expanded="false">
@@ -119,25 +104,13 @@
                                     <div class="dropdown-menu-columns">
                                         <div class="dropdown-menu-column">
                                             <a class="dropdown-item " href="{{ route('members.index') }}">សមាជិក</a>
-                                            <a class="dropdown-item " href="{{ route('worktimes.index') }}">
-                                                ម៉ោងធ្វើការ</a>
+                                            <!-- <a class="dropdown-item " href="{{ route('worktimes.index') }}">
+                                                ម៉ោងធ្វើការ</a> -->
                                         </div>
                                     </div>
                                 </div>
                             </li>
-                            {{-- <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#navbar-plugins" data-bs-toggle="dropdown"
-                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <x-icon.scan />
-                                    </span>
-                                    <span class="nav-link-title" id="khmer"> ស្កេនមិនកំណត់ </span>
-                                </a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="./charts.html"> បញ្ជីស្កេន</a>
-                                    <a class="dropdown-item" href="./colorpicker.html">របាយការណ៍</a>
-                                </div>
-                            </li> --}}
+
                             @if (Auth::user()->role->role === 'owner')
                             <li class="nav-item dropdown">
 
@@ -150,38 +123,28 @@
                             </li>
                             @endif
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown"
+                                <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown"
                                     data-bs-auto-close="outside" role="button" aria-expanded="false">
                                     <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <x-icon.help />
+                                        <x-icon.pdf />
                                     </span>
-                                    <span class="nav-link-title" id="khmer"> ជំនួយការផ្សេងៗ </span>
+                                    <span class="nav-link-title" id="khmer"> របាយការណ៍ </span>
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="https://tabler.io/docs" target="_blank"
-                                        rel="noopener">
-                                        Documentation </a>
-                                    <a class="dropdown-item" href="./changelog.html"> Changelog </a>
-                                    <a class="dropdown-item" href="https://github.com/tabler/tabler" target="_blank"
-                                        rel="noopener"> Source code </a>
-                                    <a class="dropdown-item text-pink" href="https://github.com/sponsors/codecalm"
-                                        target="_blank" rel="noopener">
-                                        <!-- Download SVG icon from http://tabler.io/icons/icon/heart -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="icon icon-inline me-1 icon-2">
-                                            <path
-                                                d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572">
-                                            </path>
-                                        </svg>
-                                        Sponsor project!
-                                    </a>
+                                    <div class="dropdown-menu-columns">
+                                        <div class="dropdown-menu-column">
+                                            <a class="dropdown-item "
+                                                href="{{ route('members.index') }}">របាយការណ៍វត្តមាន</a>
+                                            <a class="dropdown-item " href="{{ route('worktimes.index') }}">
+                                                របាយការណ៍សុំច្បាប់</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </li>
                         </ul>
                         <!-- END NAVBAR MENU -->
                     </div>
+                    @if (Auth::user()->role->role === 'owner')
                     <div class="col col-md-auto">
                         <ul class="navbar-nav">
                             <li class="nav-item">
@@ -197,6 +160,7 @@
                             </li>
                         </ul>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

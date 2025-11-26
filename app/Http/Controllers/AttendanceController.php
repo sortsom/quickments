@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;  
 use App\Models\AttendanceDetail;
 use App\Models\Worktime;
+use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
 {
@@ -15,10 +16,19 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        $data = Attendance::with(['member', 'details'])
-        ->orderBy('date', 'desc')
-        ->get();
-        $members = Member::all();
+        $dataQuery = Attendance::with(['member', 'details'])
+            ->orderBy('date', 'desc');
+
+        $user = Auth::user();
+        if (!in_array($user->role->role, ['owner', 'admin'])) {
+            $memberId = Member::where('user_id', $user->id)->value('id'); 
+            $dataQuery->where('member_id', $memberId);
+            $members = Member::where('id', $memberId)->get();  
+        } else {
+            $members = Member::all();
+        }
+        $data = $dataQuery->get();
+
         return view('attendances.index', compact('data', 'members'));
 
     }
