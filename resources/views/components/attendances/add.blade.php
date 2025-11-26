@@ -2,7 +2,7 @@
 <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet" />
 
-<form action="{{route('attendance.create')}}" method="POST" enctype="multipart/form-data">
+<form action="{{route('attendance.store')}}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="mb-3">
         <label class="form-label">ឈ្មោះបុគ្គលិក</label>
@@ -12,7 +12,7 @@
             @endforeach
 
         </select>
-       
+
     </div>
 
     <div class="row">
@@ -78,7 +78,7 @@
         <label class="form-label">កត់ចំណាំ</label>
         <textarea class="form-control @error('address') is-invalid @enderror" name="reason" placeholder="Address"
             rows="2"></textarea>
-    
+
     </div>
 
 
@@ -100,9 +100,11 @@
 <script>
 flatpickr("#timepicker", {
     enableTime: true,
+    altInput: true,
+    allowInput: true,
     noCalendar: true,
     dateFormat: "H:i",
-    defaultDate: new Date()
+    defaultDate: "07:00"
 });
 </script>
 <script>

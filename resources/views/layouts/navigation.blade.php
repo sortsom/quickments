@@ -86,19 +86,27 @@
                                     <span class="nav-link-title" id="khmer"> សុំច្បាប់ </span>
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="{{ route('requestleave.index') }}">ស្មើរសុំច្បាប់</a>
+                                    <a class="dropdown-item" href="./form-elements.html">ស្មើរសុំច្បាប់</a>
                                     <a class="dropdown-item" href="{{ route('leave-types.index') }}">ប្រភេទច្បាប់</a>
-
+                                    <a class="dropdown-item" href="./form-elements.html">ច្បាប់លើសកំណត់</a>
                                 </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link " href="{{ route('overtime.index') }}">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
                                     <span class="nav-link-icon d-md-none d-lg-inline-block">
                                         <x-icon.calendar />
                                     </span>
                                     <span class="nav-link-title" id="khmer"> ធ្វើការថែមម៉ោង </span>
                                 </a>
-
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-menu-columns">
+                                        <div class="dropdown-menu-column">
+                                            <a class="dropdown-item " href="">ស្នើរសុំធ្វើការថែមម៉ោង</a>
+                                            <a class="dropdown-item" href="./chat.html"> របាយការណ៍ </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown"
@@ -112,25 +120,13 @@
                                     <div class="dropdown-menu-columns">
                                         <div class="dropdown-menu-column">
                                             <a class="dropdown-item " href="{{ route('members.index') }}">សមាជិក</a>
-                                            <a class="dropdown-item " href="{{ route('worktimes.index') }}">
-                                                ម៉ោងធ្វើការ</a>
+                                            <!-- <a class="dropdown-item " href="{{ route('worktimes.index') }}">
+                                                ម៉ោងធ្វើការ</a> -->
                                         </div>
                                     </div>
                                 </div>
                             </li>
-                            {{-- <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#navbar-plugins" data-bs-toggle="dropdown"
-                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <x-icon.scan />
-                                    </span>
-                                    <span class="nav-link-title" id="khmer"> ស្កេនមិនកំណត់ </span>
-                                </a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="./charts.html"> បញ្ជីស្កេន</a>
-                                    <a class="dropdown-item" href="./colorpicker.html">របាយការណ៍</a>
-                                </div>
-                            </li> --}}
+
                             @if (Auth::user()->role->role === 'owner')
                                 <li class="nav-item dropdown">
 
@@ -143,12 +139,12 @@
                                 </li>
                             @endif
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown"
+                                <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown"
                                     data-bs-auto-close="outside" role="button" aria-expanded="false">
                                     <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <x-icon.help />
+                                        <x-icon.pdf />
                                     </span>
-                                    <span class="nav-link-title" id="khmer"> ជំនួយការផ្សេងៗ </span>
+                                    <span class="nav-link-title" id="khmer"> របាយការណ៍ </span>
                                 </a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="https://tabler.io/docs" target="_blank"
@@ -175,18 +171,20 @@
                         </ul>
                         <!-- END NAVBAR MENU -->
                     </div>
-                    <div class="col col-md-auto">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('settings.index') }}">
-                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                        <x-icon.setting />
-                                    </span>
-                                    <span class="nav-link-title" id="khmer">កំណត់</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    @if (Auth::user()->role->role === 'owner')
+                        <div class="col col-md-auto">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('settings.index') }}">
+                                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                            <x-icon.setting />
+                                        </span>
+                                        <span class="nav-link-title" id="khmer">កំណត់</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
