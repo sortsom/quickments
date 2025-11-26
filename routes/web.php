@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LeaveTypeController;
 use App\Http\Controllers\WorktimeController;
 use App\Models\Attendance;
+use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\RequestLeaveController;
+use App\Http\Controllers\OvertimeWorkController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -23,10 +26,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
     Route::resource('members', MemberController::class);
     Route::resource('leave-types',LeaveTypeController::class);
     Route::resource('worktimes',WorktimeController::class);
-
+    Route::resource('settings',SettingsController::class);
+    Route::resource('requestleave',RequestLeaveController::class);
+    Route::resource('overtime',OvertimeWorkController::class);
 
 
     // Vannak

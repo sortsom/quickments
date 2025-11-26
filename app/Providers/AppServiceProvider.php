@@ -3,7 +3,7 @@
 namespace App\Providers;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-
+use Illuminate\Support\Facades\Gate;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -12,6 +12,8 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         //
+       
+
     }
 
     /**
@@ -21,5 +23,9 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Schema::defaultStringLength(191);
+
+        //  Gate::define('manage-leave', function ($user) {
+        //  return $user->hasRole(['owner', 'admin']);
+        //  });
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\OvertimeWork;
+use App\Models\Settings;
 use Illuminate\Http\Request;
 
-class OvertimeWorkController extends Controller
+class SettingsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +13,7 @@ class OvertimeWorkController extends Controller
     public function index()
     {
         //
-        return view('overtime.index');
+        return view('settings.index');
     }
 
     /**
@@ -35,7 +35,7 @@ class OvertimeWorkController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(OvertimeWork $overtimeWork)
+    public function show(Settings $settings)
     {
         //
     }
@@ -43,7 +43,7 @@ class OvertimeWorkController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(OvertimeWork $overtimeWork)
+    public function edit(Settings $settings)
     {
         //
     }
@@ -51,7 +51,7 @@ class OvertimeWorkController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, OvertimeWork $overtimeWork)
+    public function update(Request $request, Settings $settings)
     {
         //
     }
@@ -59,7 +59,7 @@ class OvertimeWorkController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(OvertimeWork $overtimeWork)
+    public function destroy(Settings $settings)
     {
         //
     }

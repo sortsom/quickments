@@ -11,6 +11,16 @@ h5,
 h6,
 p,
 span,
-.form-control,th ,td{
+.form-control,th ,td,select.button {
+    font-family: "Khmer OS Siemreap", sans-serif;
+}
+
+.col-form-label, .form-label {
+    font-family: "Khmer OS Siemreap", sans-serif;
+}
+.form-select option {
+    font-family: "Khmer OS Siemreap", sans-serif;
+}
+select.form-select {
     font-family: "Khmer OS Siemreap", sans-serif;
 }
