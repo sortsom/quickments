@@ -6,6 +6,11 @@ use App\Models\RequestLeave;
 use Illuminate\Http\Request;
 use App\Models\Member;
 use App\Models\LeaveType;
+use Illuminate\Validation\Rule;
+use App\Models\Status;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
 class RequestLeaveController extends Controller
 {
     /**
@@ -13,10 +18,29 @@ class RequestLeaveController extends Controller
      */
     public function index()
     {
-        $members = Member::all(); // load members
-        $leavetypes = LeaveType::all(); // load leave types
-        return view('requestleave.index', compact('members', 'leavetypes'));
+          
+
+    // Define base query FIRST — do NOT call ->get() yet
+        $query = RequestLeave::with(['member', 'typeLeave', 'status', 'approver', 'user']);
+
+        $user = Auth::user();
+        if (in_array(Auth::user()->role->role, ['owner', 'admin'])) {
+        // Admin/Owner see all
+        $requests = $query->latest()
+                  ->get();
+    } else {
+        // Staff see only requests they created
+        $requests = $query->where('user_id', $user->id)
+                          ->latest()
+                          ->get();
     }
+        
+    $members    = Member::all();
+    $leavetypes = LeaveType::all();
+
+    return view('requestleave.index', compact('members', 'leavetypes','requests'));
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -24,8 +48,8 @@ class RequestLeaveController extends Controller
     public function create()
     {
         $members=Member::all();
-        $leavetypes = LeaveType::all();
-        return view('requestleave.index',compact('members','leavetypes'));
+        $leaves = LeaveType::all();
+        return view('requestleave.index',compact('members','leaves'));
         //
     }
 
@@ -33,35 +57,39 @@ class RequestLeaveController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    $data = $request->validate([
-        'member_id' => 'required|exists:members,id',
-        'date' => 'required|date',
-        'start_time' => 'required',
-        'end_time' => 'required',
-        'type' => 'required',
-        'reason' => 'nullable|string',
-        'photo' => 'required|image',
-        'status' => 'nullable|integer',
-        'type_leave' => 'required|integer',
-        'approve_by' => 'nullable|integer',
-        'approve_date' => 'nullable|date',
-    ]);
+    {
+     $member = Member::findOrFail($request->member_id);
+            
+        $validated = $request->validate([
+            'member_id'  => 'required|exists:members,id',
+            'date'       => 'required',
+            'start_time' => 'required',
+            'end_time'   => 'required',
+            'reason'     => 'nullable|string',
+            'photo'      => 'nullable|image|max:2048',
+            'type_leave' => [
+                'required',
+                Rule::exists('leave_types', 'id')->where(function ($q) use ($member) {
+                    $q->whereIn('allowed', ['all','male',strtolower($member->gender)]);
+                }),
+            ],
+            'type'=> 'required|string|in:full_day,half_day_morning,half_day_afternoon',
+        ]);
 
-    // ✅ Force pending for normal users
-    $data['status'] = auth()->user()->can('manage-leave')
-        ? ($request->status ?? 0)
-        : 0;
+        if ($request->hasFile('photo')) {
+            $validated['photo'] = $request->file('photo')->store('leave_photos', 'public');
+        }
+        // dd($validated);
+        // find the id of 'pending' from statuses
+         $validated['user_id'] = auth()->id();
+         $validated['status']= Status::where('name', 'Pending')->value('id'); // e.g. 1
+         $validated['approve_by']   = null;
+         $validated['approve_date'] = null;
+        RequestLeave::create($validated);
 
-    // ✅ handle photo upload
-    if ($request->hasFile('photo')) {
-        $data['photo'] = $request->file('photo')->store('leave_photos', 'public');
+        return redirect()->route('requestleave.index')
+            ->with('success', 'Leave request created successfully.');
     }
-
-    LeaveRequest::create($data);
-
-    return redirect()->back()->with('success', 'Leave request submitted!');
-}
 
 
     /**
