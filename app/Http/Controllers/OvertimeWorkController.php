@@ -13,6 +13,7 @@ class OvertimeWorkController extends Controller
     public function index()
     {
         //
+        return view('overtime.index');
     }
 
     /**

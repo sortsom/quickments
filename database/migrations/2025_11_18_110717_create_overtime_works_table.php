@@ -12,17 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('overtime_works', function (Blueprint $table) {
-    $table->id();
-    $table->integer('member_id');
-    $table->date('date');
-    $table->time('start_time');
-    $table->time('end_time');
-    $table->text('reason')->nullable();
-    $table->string('photo')->nullable();
-    $table->integer('status')->default(0);
-    $table->integer('approve_by')->nullable();
-    $table->dateTime('approve_date')->nullable();
-    $table->timestamps();
+        $table->id();
+        $table->integer('member_id');
+        $table->date('date');
+        $table->time('start_time');
+        $table->time('end_time');
+        $table->text('reason')->nullable();
+        $table->string('photo')->nullable();
+        $table->integer('status')->default(0);
+        $table->integer('approve_by')->nullable();
+        $table->dateTime('approve_date')->nullable();
+        $table->timestamps();
 });
 
     }

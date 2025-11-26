@@ -86,27 +86,19 @@
                                     <span class="nav-link-title" id="khmer"> សុំច្បាប់ </span>
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="./form-elements.html">ស្មើរសុំច្បាប់</a>
+                                    <a class="dropdown-item" href="{{ route('requestleave.index') }}">ស្មើរសុំច្បាប់</a>
                                     <a class="dropdown-item" href="{{ route('leave-types.index') }}">ប្រភេទច្បាប់</a>
-                                    <a class="dropdown-item" href="./form-elements.html">ច្បាប់លើសកំណត់</a>
+
                                 </div>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown"
-                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
+                            <li class="nav-item">
+                                <a class="nav-link " href="{{ route('overtime.index') }}">
                                     <span class="nav-link-icon d-md-none d-lg-inline-block">
                                         <x-icon.calendar />
                                     </span>
                                     <span class="nav-link-title" id="khmer"> ធ្វើការថែមម៉ោង </span>
                                 </a>
-                                <div class="dropdown-menu">
-                                    <div class="dropdown-menu-columns">
-                                        <div class="dropdown-menu-column">
-                                            <a class="dropdown-item " href="">ស្នើរសុំធ្វើការថែមម៉ោង</a>
-                                            <a class="dropdown-item" href="./chat.html"> របាយការណ៍ </a>
-                                        </div>
-                                    </div>
-                                </div>
+
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown"
