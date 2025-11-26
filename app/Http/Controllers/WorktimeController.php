@@ -17,6 +17,12 @@ class WorktimeController extends Controller
         return view('worktime.index');
     }
 
+   public function memberWorktime($member)
+    {
+        return view('worktime.index');
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */

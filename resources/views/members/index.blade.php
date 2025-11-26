@@ -159,6 +159,15 @@
                                                 @endif
                                             </td>
                                             <td class="text-end">
+
+                                                <a href="{{ route('worktimes.member', $member->id) }}"
+                                                    class="btn btn-1 btn-icon bg-success text-white"
+                                                    aria-label="Time Shift">
+                                                    <x-icon.time />
+                                                </a>
+
+
+
                                                 <a href="#" class="btn btn-1 btn-icon bg-info text-white"
                                                     aria-label="Edit" data-bs-toggle="modal"
                                                     data-bs-target="#edit-{{ $member->id }}">
