@@ -40,7 +40,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/attendance/{attendance}', [AttendanceController::class, 'destroy'])->name('attendance.destroy');
     Route::post('/attendance', [AttendanceController::class, 'store'])->name('attendance.store');
     Route::put('/attendance/{attendance}', [AttendanceController::class, 'update'])->name('attendance.update');
+    
+    Route::get('/worktimes', [WorktimeController::class, 'index'])
+    ->name('worktimes.index');
 
+    Route::get('/worktimes/{member}', [WorktimeController::class, 'memberWorktime'])->name('worktimes.member');
 
 
 });
