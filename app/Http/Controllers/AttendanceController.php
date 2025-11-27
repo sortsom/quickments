@@ -75,7 +75,7 @@ class AttendanceController extends Controller
             $dayOfWeek = $current->dayOfWeek + 1;
 
             $worktime = Worktime::where('member_id', $memberId)
-                                ->where('day', $dayOfWeek)
+                                ->where('week_id', $dayOfWeek)
                                 ->first();
 
             if (!$worktime) {

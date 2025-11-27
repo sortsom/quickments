@@ -116,7 +116,7 @@
                             @if (Auth::user()->role->role === 'owner')
                                 <li class="nav-item dropdown">
 
-                                    <a class="nav-link" href="">
+                                    <a class="nav-link" href="{{ route ('users.index')}}">
                                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                                             <x-icon.user />
                                         </span>

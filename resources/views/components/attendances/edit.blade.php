@@ -8,7 +8,7 @@
 
     <div class="mb-3">
         <label class="form-label">ឈ្មោះបុគ្គលិក</label>
-        <select name="member" id="select-tags" class="form-control" >
+        <select name="member" id="select-tags" class="form-control">
             @foreach($members as $m)
             <option value="{{ $m->id }}" {{ $att->member_id == $m->id ? 'selected' : '' }}>
                 {{ $m->name }}
@@ -20,31 +20,28 @@
     <div class="row">
         <div class="col-12">
             <label class="form-label">កាលបរិច្ឆេទ</label>
-            <input 
-                type="date" 
-                class="form-control" 
-                name="date"
+            <input type="date" class="form-control" name="date"
                 value="{{ $att->date ? \Carbon\Carbon::parse($att->date)->format('Y-m-d') : '' }}">
         </div>
     </div>
 
     @php
-        $mi = $att->details->where('check_type',1)->first();
-        $mo = $att->details->where('check_type',2)->first();
-        $ai = $att->details->where('check_type',3)->first();
-        $ao = $att->details->where('check_type',4)->first();
+    $mi = $att->details->where('check_type',1)->first();
+    $mo = $att->details->where('check_type',2)->first();
+    $ai = $att->details->where('check_type',3)->first();
+    $ao = $att->details->where('check_type',4)->first();
     @endphp
 
     <div class="row mt-3">
         <div class="col-6">
             <label>ម៉ោងចូលព្រឹក</label>
-            <input type="text" name="time1" class="form-control time-picker"
+            <input type="time" class="form-control" name="time1"
                 value="{{ isset($mi->clock) ? \Carbon\Carbon::parse($mi->clock)->format('H:i') : '' }}">
         </div>
 
         <div class="col-6">
             <label>ម៉ោងចេញព្រឹក</label>
-            <input type="text" name="time2" class="form-control time-picker"
+            <input type="time" class="form-control" name="time2"
                 value="{{ isset($mo->clock) ? \Carbon\Carbon::parse($mo->clock)->format('H:i') : '' }}">
         </div>
     </div>
@@ -52,20 +49,22 @@
     <div class="row mt-3">
         <div class="col-6">
             <label>ម៉ោងចូលរសៀល</label>
-            <input type="text" name="time3" class="form-control time-picker"
+            <input type="time" class="form-control" name="time3"
                 value="{{ isset($ai->clock) ? \Carbon\Carbon::parse($ai->clock)->format('H:i') : '' }}">
         </div>
 
         <div class="col-6">
             <label>ម៉ោងចេញរសៀល</label>
-            <input type="text" name="time4" class="form-control time-picker"
+            <input type="time" class="form-control" name="time4"
                 value="{{ isset($ao->clock) ? \Carbon\Carbon::parse($ao->clock)->format('H:i') : '' }}">
+
         </div>
     </div>
 
     <div class="mb-3 mt-3">
         <label>កត់ចំណាំ</label>
-        <textarea name="reason" class="form-control" rows="2">{{ trim($mi->reason ?? $mo->reason ?? $ai->reason ?? $ao->reason ?? '') }}</textarea>
+        <textarea name="reason" class="form-control"
+            rows="2">{{ trim($mi->reason ?? $mo->reason ?? $ai->reason ?? $ao->reason ?? '') }}</textarea>
     </div>
 
     <button class="btn btn-primary mt-2">Update</button>

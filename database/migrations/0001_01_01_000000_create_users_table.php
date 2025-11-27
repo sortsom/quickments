@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('photo',256)->nullable();
             $table->rememberToken();
             $table->timestamps();
+            
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

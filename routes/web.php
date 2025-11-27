@@ -11,6 +11,7 @@ use App\Models\Attendance;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\RequestLeaveController;
 use App\Http\Controllers\OvertimeWorkController;
+use App\Http\Controllers\UsersController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -29,7 +30,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('members', MemberController::class);
     Route::resource('leave-types',LeaveTypeController::class);
-    Route::resource('worktimes',WorktimeController::class);
+
     Route::resource('settings',SettingsController::class);
 
     Route::resource('requestleave',RequestLeaveController::class);
@@ -51,8 +52,10 @@ Route::middleware('auth')->group(function () {
     ->name('worktimes.index');
 
     Route::get('/worktimes/{member}', [WorktimeController::class, 'memberWorktime'])->name('worktimes.member');
+    Route::post('worktimes/storeall', [WorktimeController::class, 'storeAllDay'])->name('worktimes.storeall');
+    Route::post('worktimes/store-per-day', [WorktimeController::class, 'storePerDay'])->name('worktimes.storeday');
 
-
+    Route::get('/users', [UsersController::class, 'index'])->name('users.index');
 });
 
 
