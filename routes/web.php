@@ -11,6 +11,7 @@ use App\Models\Attendance;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\RequestLeaveController;
 use App\Http\Controllers\OvertimeWorkController;
+use App\Http\Controllers\UsersController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -47,7 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::post('worktimes/storeall', [WorktimeController::class, 'storeAllDay'])->name('worktimes.storeall');
     Route::post('worktimes/store-per-day', [WorktimeController::class, 'storePerDay'])->name('worktimes.storeday');
 
-
+    Route::get('/users', [UsersController::class, 'index'])->name('users.index');
 });
 
 
