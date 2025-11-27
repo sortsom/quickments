@@ -38,8 +38,7 @@ Route::middleware('auth')->group(function () {
     
     Route::resource('overtime',OvertimeWorkController::class);
 
-    Route::get('reports', [App\Http\Controllers\ReportController::class, 'leaveByUser'])->name('reports.leave_by_user');
-    Route::get('reports/export', [App\Http\Controllers\ReportController::class, 'leaveByUserExport'])->name('reports.leave_by_user.export');
+    
 
 
     // Vannak
