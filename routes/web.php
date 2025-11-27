@@ -44,6 +44,8 @@ Route::middleware('auth')->group(function () {
     ->name('worktimes.index');
 
     Route::get('/worktimes/{member}', [WorktimeController::class, 'memberWorktime'])->name('worktimes.member');
+    Route::post('worktimes/storeall', [WorktimeController::class, 'storeAllDay'])->name('worktimes.storeall');
+    Route::post('worktimes/store-per-day', [WorktimeController::class, 'storePerDay'])->name('worktimes.storeday');
 
 
 });
