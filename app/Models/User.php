@@ -56,9 +56,6 @@ class User extends Authenticatable
     {
         return $this->hasOne(Member::class);
     }
-public function requestLeaves()
-{
-    return $this->hasMany(RequestLeave::class);
-}
+
 
 }

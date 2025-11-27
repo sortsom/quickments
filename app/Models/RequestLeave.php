@@ -21,6 +21,13 @@ class RequestLeave extends Model
         'approve_by',
         'approve_date',
     ];
+
+protected $casts = [
+    'start_time' => 'datetime',
+    'end_time' => 'datetime',
+];
+
+
     public function typeLeave()
 {
     return $this->belongsTo(LeaveType::class, 'type_leave');

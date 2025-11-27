@@ -54,10 +54,15 @@
                             <th>#</th>
                             <th>Member</th>
                             <th>Date</th>
+                            <th>Start-Date</th>
+                            <th>End-Date</th>
                             <th>Leave Type</th>
                             <th>Type</th>
                             <th>Status</th>
                             <th>Approved By</th>
+                            <th>Approved Date</th>
+                            <th>Updated</th>
+
                         </tr>
                     </thead>
 
@@ -67,11 +72,39 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $request->member->name ?? '-' }}</td>
                                 <td>{{ $request->date }}</td>
+                                <td>{{ $request->start_time->format('d.m.Y') }}</td>
+                                <td>{{ $request->end_time->format('d.m.Y') }}</td>
                                 <td>{{ $request->typeLeave->name_kh ?? ($request->typeLeave->name ?? '-') }}</td>
                                 <td>{{ $request->type }}</td>
-                                <td>{{ $request->status->name ?? '-' }}</td>
-                                <td>{{ $request->approver->name ?? 'Pending' }}</td>
-                                <td>{{ $request->user_id }}</td>
+                                <td>
+                                    @php
+                                        $name = $request->status->name ?? 'Pending';
+
+                                        $color = match ($name) {
+                                            'Pending' => 'bg-yellow',
+                                            'Reject' => 'bg-red',
+                                            'Approve' => 'bg-green',
+                                            'Cancel' => 'bg-gray',
+                                            default => 'bg-secondary',
+                                        };
+                                    @endphp
+
+                                    <span class="badge {{ $color }} text-white">{{ $name }}</span>
+                                    <span class="badge bg-green text-white">approve</span>
+
+                                </td>
+
+                                <td>{{ $request->user_id->name ?? '-' }}</td>
+                                <td>{{ $request->approve_date }}</td>
+                                <td>
+                                    <a href="{{ route('requestleave.edit', $request->id) }}" class="text-blue me-2">
+                                        <x-edit />
+                                    </a>
+                                    <a href="{{ route('requestleave.destroy', $request->id) }}" class="text-red"
+                                        onclick="return confirm('Are you sure?')">
+                                        <x-trash />
+                                    </a>
+                                </td>
 
                             </tr>
                         @empty

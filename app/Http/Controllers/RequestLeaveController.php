@@ -122,5 +122,9 @@ class RequestLeaveController extends Controller
     public function destroy(RequestLeave $requestLeave)
     {
         //
+       $requestLeave->delete(); // delete this record
+
+    return redirect()->route('requestleave.index')
+        ->with('success', 'Request deleted successfully');
     }
 }
