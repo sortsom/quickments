@@ -13,17 +13,18 @@ return new class extends Migration
     {
         Schema::create('request_leaves', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id');
             $table->integer('member_id');
-            $table->date('date');
-            $table->time('start_time');
-            $table->time('end_time');
+            $table->integer('date');    
+            $table->date('start_time');
+            $table->date('end_time');
             $table->enum('type', ['full_day','half_day_morning','half_day_afternoon'])->default('full_day');
             $table->text('reason')->nullable();
             $table->string('photo');
             $table->integer('status')->default(0);
             $table->integer('type_leave');
-            $table->integer('approve_by');
-            $table->datetime('approve_date');
+            $table->integer('approve_by')->nullable();
+            $table->datetime('approve_date')->nullable();
             $table->timestamps();
         });
     }

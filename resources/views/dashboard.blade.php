@@ -213,7 +213,7 @@
     </div>
     </div>
     <!-- END PAGE BODY -->
-    <!--  BEGIN FOOTER  -->
+    {{-- <!--  BEGIN FOOTER  -->
     <x-footer />
-    <!--  END FOOTER  -->
+    <!--  END FOOTER  --> --}}
 </x-app-layout>
