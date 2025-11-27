@@ -125,77 +125,78 @@
                                     </thead>
                                     <tbody class="table-tbody">
                                         @forelse($members as $member)
-                                        <tr>
-                                            <td>
-                                                <input class="form-check-input table-selectable-check m-0 align-middle"
-                                                    type="checkbox" aria-label="Select member"
-                                                    value="{{ $member->id }}">
-                                            </td>
-                                            <td class="sort-name">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="avatar avatar-lg me-2"
-                                                        style="background-image:url('{{ $member->photo ? asset('storage/' . $member->photo) : asset('images/non-profile.jpg') }}')">
-                                                    </span>
-
+                                            <tr>
+                                                <td>
+                                                    <input
+                                                        class="form-check-input table-selectable-check m-0 align-middle"
+                                                        type="checkbox" aria-label="Select member"
+                                                        value="{{ $member->id }}">
+                                                </td>
+                                                <td class="sort-name">
                                                     <div class="d-flex align-items-center">
-                                                        <span>{{ $member->name }}</span>
+                                                        <span class="avatar avatar-lg me-2"
+                                                            style="background-image:url('{{ $member->photo ? asset('storage/' . $member->photo) : asset('images/non-profile.jpg') }}')">
+                                                        </span>
+
+                                                        <div class="d-flex align-items-center">
+                                                            <span>{{ $member->name }}</span>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td class="sort-name-kh">{{ $member->name_kh }}</td>
-                                            <td class="sort-email">{{ $member->email }}</td>
-                                            <td class="sort-gender">
-                                                {{ $member->gender ? ucfirst($member->gender) : '-' }}</td>
-                                            <td class="sort-dob">
-                                                {{ $member->dob ? \Carbon\Carbon::parse($member->dob)->format('F d, Y') : '-' }}
-                                            </td>
-                                            <td class="sort-position">{{ $member->position ?? '-' }}</td>
-                                            <td class="sort-phone">{{ $member->phone ?? '-' }}</td>
-                                            <td class="sort-status">
-                                                @if (!empty($member->status) && $member->status)
-                                                <span class="badge bg-success text-white">Active</span>
-                                                @else
-                                                <span class="badge bg-danger text-white">Inactive</span>
-                                                @endif
-                                            </td>
-                                            <td class="text-end">
+                                                </td>
+                                                <td class="sort-name-kh">{{ $member->name_kh }}</td>
+                                                <td class="sort-email">{{ $member->email }}</td>
+                                                <td class="sort-gender">
+                                                    {{ $member->gender ? ucfirst($member->gender) : '-' }}</td>
+                                                <td class="sort-dob">
+                                                    {{ $member->dob ? \Carbon\Carbon::parse($member->dob)->format('F d, Y') : '-' }}
+                                                </td>
+                                                <td class="sort-position">{{ $member->position ?? '-' }}</td>
+                                                <td class="sort-phone">{{ $member->phone ?? '-' }}</td>
+                                                <td class="sort-status">
+                                                    @if (!empty($member->status) && $member->status)
+                                                        <span class="badge bg-success text-white">Active</span>
+                                                    @else
+                                                        <span class="badge bg-danger text-white">Inactive</span>
+                                                    @endif
+                                                </td>
+                                                <td class="text-end">
 
-                                                <a href="{{ route('worktimes.member', $member->id) }}"
-                                                    class="btn btn-1 btn-icon bg-success text-white"
-                                                    aria-label="Time Shift">
-                                                    <x-icon.time />
-                                                </a>
-
+                                                    <a href="{{ route('worktimes.member', $member->id) }}"
+                                                        class="btn btn-1 btn-icon bg-success text-white"
+                                                        aria-label="Time Shift">
+                                                        <x-icon.time />
+                                                    </a>
 
 
 
-                                                <a href="#" class="btn btn-1 btn-icon bg-info text-white"
-                                                    aria-label="Edit" data-bs-toggle="modal"
-                                                    data-bs-target="#edit-{{ $member->id }}">
-                                                    <x-icon.edit />
-                                                </a>
+                                                    <a href="#" class="btn btn-1 btn-icon bg-info text-white"
+                                                        aria-label="Edit" data-bs-toggle="modal"
+                                                        data-bs-target="#edit-{{ $member->id }}">
+                                                        <x-icon.edit />
+                                                    </a>
 
-                                                <form action="{{ route('members.destroy', $member) }}" method="POST"
-                                                    onsubmit="return confirm('Delete this member?');"
-                                                    style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"
-                                                        class="btn btn-1 btn-icon bg-danger text-white"
-                                                        aria-label="Delete">
-                                                        <x-icon.trash />
-                                                    </button>
-                                                </form>
-                                            </td>
-                                            <x-popup id="edit-{{ $member->id }}" title="កែសម្រួលសមាជិក">
-                                                <x-members.edit :member="$member" />
-                                            </x-popup>
-                                            <!-- EDIT MODAL -->
-                                        </tr>
+                                                    <form action="{{ route('members.destroy', $member) }}"
+                                                        method="POST"
+                                                        onsubmit="return confirm('Delete this member?');"
+                                                        style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="btn btn-1 btn-icon bg-danger text-white"
+                                                            aria-label="Delete">
+                                                            <x-icon.trash />
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                                <x-popup id="edit-{{ $member->id }}" title="កែសម្រួលសមាជិក">
+                                                    <x-members.edit :member="$member" />
+                                                </x-popup>
+                                                <!-- EDIT MODAL -->
+                                            </tr>
                                         @empty
-                                        <tr>
-                                            <td colspan="10" class="text-center py-4">No members found.</td>
-                                        </tr>
+                                            <tr>
+                                                <td colspan="10" class="text-center py-4">No members found.</td>
+                                            </tr>
                                         @endforelse
                                     </tbody>
                                 </table>
@@ -213,7 +214,8 @@
                                             records</a>
                                         <a class="dropdown-item" onclick="setPageListItems(event)" data-value="50">50
                                             records</a>
-                                        <a class="dropdown-item" onclick="setPageListItems(event)" data-value="100">100
+                                        <a class="dropdown-item" onclick="setPageListItems(event)"
+                                            data-value="100">100
                                             records</a>
                                     </div>
                                 </div>
@@ -231,62 +233,62 @@
                     </div>
                 </div>
                 <script>
-                const advancedTable = {
-                    headers: [{
-                            "data-sort": "sort-name",
-                            name: "Name"
-                        },
-                        {
-                            "data-sort": "sort-email",
-                            name: "Email"
-                        },
-                        {
-                            "data-sort": "sort-status",
-                            name: "Status"
-                        },
-                        {
-                            "data-sort": "sort-date",
-                            name: "Start date"
-                        },
-                        {
-                            "data-sort": "sort-tags",
-                            name: "Tags"
-                        },
-                        {
-                            "data-sort": "sort-category",
-                            name: "Category"
-                        },
-                    ],
-                };
-                const setPageListItems = (e) => {
-                    window.tabler_list["advanced-table"].page = parseInt(e.target.dataset.value);
-                    window.tabler_list["advanced-table"].update();
-                    document.querySelector("#page-count").innerHTML = e.target.dataset.value;
-                };
-                window.tabler_list = window.tabler_list || {};
-                document.addEventListener("DOMContentLoaded", function() {
-                    const list = (window.tabler_list["advanced-table"] = new List("advanced-table", {
-                        sortClass: "table-sort",
-                        listClass: "table-tbody",
-                        page: parseInt("5"),
-                        pagination: {
-                            item: (value) => {
-                                return `<li class="page-item"><a class="page-link cursor-pointer">${value.page}</a></li>`;
+                    const advancedTable = {
+                        headers: [{
+                                "data-sort": "sort-name",
+                                name: "Name"
                             },
-                            innerWindow: 1,
-                            outerWindow: 1,
-                            left: 0,
-                            right: 0,
-                        },
-                        valueNames: advancedTable.headers.map((header) => header["data-sort"]),
-                    }));
-                    const searchInput = document.querySelector("#advanced-table-search");
-                    if (searchInput) {
-                        searchInput.addEventListener("input", () => {
-                            list.search(searchInput.value);
-                        });
-                    }
-                });
+                            {
+                                "data-sort": "sort-email",
+                                name: "Email"
+                            },
+                            {
+                                "data-sort": "sort-status",
+                                name: "Status"
+                            },
+                            {
+                                "data-sort": "sort-date",
+                                name: "Start date"
+                            },
+                            {
+                                "data-sort": "sort-tags",
+                                name: "Tags"
+                            },
+                            {
+                                "data-sort": "sort-category",
+                                name: "Category"
+                            },
+                        ],
+                    };
+                    const setPageListItems = (e) => {
+                        window.tabler_list["advanced-table"].page = parseInt(e.target.dataset.value);
+                        window.tabler_list["advanced-table"].update();
+                        document.querySelector("#page-count").innerHTML = e.target.dataset.value;
+                    };
+                    window.tabler_list = window.tabler_list || {};
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const list = (window.tabler_list["advanced-table"] = new List("advanced-table", {
+                            sortClass: "table-sort",
+                            listClass: "table-tbody",
+                            page: parseInt("5"),
+                            pagination: {
+                                item: (value) => {
+                                    return `<li class="page-item"><a class="page-link cursor-pointer">${value.page}</a></li>`;
+                                },
+                                innerWindow: 1,
+                                outerWindow: 1,
+                                left: 0,
+                                right: 0,
+                            },
+                            valueNames: advancedTable.headers.map((header) => header["data-sort"]),
+                        }));
+                        const searchInput = document.querySelector("#advanced-table-search");
+                        if (searchInput) {
+                            searchInput.addEventListener("input", () => {
+                                list.search(searchInput.value);
+                            });
+                        }
+                    });
                 </script>
             </div>
         </div>

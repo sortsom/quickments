@@ -23,7 +23,6 @@
                             <x-icon.pluses />
                         </a>
                     </div>
-
                     <!-- BEGIN MODAL -->
                     <x-popup id="modal-add" title="ស្មើរធ្វើការថែមម៉ោង">
                         <x-overtime.add />

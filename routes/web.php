@@ -32,8 +32,15 @@ Route::middleware('auth')->group(function () {
     Route::resource('leave-types',LeaveTypeController::class);
 
     Route::resource('settings',SettingsController::class);
+
     Route::resource('requestleave',RequestLeaveController::class);
+    Route::post('requestleave/{requestleave}/approve', [RequestLeaveController::class, 'approve'])
+    ->name('requestleave.approve');
+    
     Route::resource('overtime',OvertimeWorkController::class);
+
+    
+
 
     // Vannak
     Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');

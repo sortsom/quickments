@@ -8,10 +8,11 @@ class RequestLeave extends Model
 {
     //
     protected $fillable = [
+        'user_id',
         'member_id',
         'date',
-        'start_date',
-        'end_date',
+        'start_time',
+        'end_time',
         'reason',
         'photo',
         'status',
@@ -20,23 +21,36 @@ class RequestLeave extends Model
         'approve_by',
         'approve_date',
     ];
-    public function typeLeave(){
-        return $this->belongsTo(TypeLeave::class, 'type_leave');
-    }
 
-     public function status()
-    {
-        return $this->belongsTo(Status::class, 'status');
-    }
+protected $casts = [
+    'start_time' => 'datetime',
+    'end_time' => 'datetime',
+];
 
-    public function member()
-    {
-        return $this->belongsTo(Member::class,'member_id');
-    }   
-    
-    public function approver()
-    {
-        return $this->belongsTo(User::class, 'approve_by');
-    }
+
+    public function typeLeave()
+{
+    return $this->belongsTo(LeaveType::class, 'type_leave');
+}
+
+// better name: status()
+public function status()
+{
+    return $this->belongsTo(Status::class, 'status'); // FK column = status
+}
+
+public function member()
+{
+    return $this->belongsTo(Member::class, 'member_id');
+}
+
+public function approver()
+{
+    return $this->belongsTo(User::class, 'approve_by');
+}
+public function user()
+{
+    return $this->belongsTo(User::class, 'user_id');
+}
 
 }
