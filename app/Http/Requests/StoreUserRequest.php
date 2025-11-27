@@ -18,6 +18,8 @@ class StoreUserRequest extends FormRequest
             'email'    => 'required|email|unique:users,email',
             'password' => 'required|min:8',
             'photo'    => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'member_id'=> 'nullable',
+            'role_name'=> 'nullable'
         ];
     }
 }

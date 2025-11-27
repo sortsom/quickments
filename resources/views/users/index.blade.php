@@ -34,7 +34,9 @@
                     </div>
 
                     <!-- BEGIN MODAL -->
-                  
+                    <x-popup id="modal-add" title="បង្កើតថ្មី">
+                        <x-users.add :members="$members" />
+                    </x-popup>
                     <!-- END MODAL -->
 
                 </div>
@@ -106,12 +108,65 @@
                                             <th class="text-center">
                                                 ភ្ជាប់បុគ្គលិក
                                             </th>
-                                            
+
                                             <th class="text-end">ផ្សេងៗ</th>
                                         </tr>
                                     </thead>
-                                   
 
+                                    <tbody class="table-tbody">
+                                        @forelse($users as $user)
+                                        <tr>
+                                            <th scope="row">{{$loop->iteration}}</th>
+                                            <td>
+                                                <img src="{{ asset('storage/' . $user->photo) }}" alt="photo"
+                                                    width="60">
+                                            </td>
+                                            <td>
+                                                {{ $user->name }}
+                                            </td>
+                                            <td>
+                                                {{ $user->email }}
+                                            </td>
+                                            <td>
+                                                @if($user->member)
+                                                {{ $user->member->name }}
+                                                @else
+                                                <span class="text-danger">No Member Linked</span>
+                                                @endif
+                                            </td>
+                                            @if (in_array(Auth::user()->role->role, ['owner']))
+                                            <td class="text-end">
+
+                                                <!-- Edit Button -->
+                                                <a href="#" class="btn btn-1 btn-icon bg-info text-white"
+                                                    aria-label="Edit" data-bs-toggle="modal"
+                                                    data-bs-target="#edit-{{ $user->id }}">
+                                                    <x-icon.edit />
+                                                </a>
+
+                                                <!-- Delete Button -->
+
+                                                <form action="{{ route('users.destroy', $user->id) }}" method="POST"
+                                                    style="display:inline-block;"
+                                                    onsubmit="return confirm('Are you sure you want to delete this record?')">
+                                                    @csrf
+                                                    @method('DELETE')
+
+                                                    <button type="submit"
+                                                        class="btn btn-1 btn-icon bg-danger text-white"
+                                                        aria-label="Delete">
+                                                        <x-icon.trash />
+                                                    </button>
+                                                </form>
+                                            </td>
+                                            @endif
+                                        </tr>
+                                    </tbody>
+                                    @empty
+                                    <tr>
+                                        <td colspan="5" class="text-center py-4">No members found.</td>
+                                    </tr>
+                                    @endforelse
                                 </table>
                             </div>
                             <div class="card-footer d-flex align-items-center">

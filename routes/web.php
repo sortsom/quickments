@@ -7,11 +7,11 @@ use App\Http\Controllers\MemberController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LeaveTypeController;
 use App\Http\Controllers\WorktimeController;
-use App\Models\Attendance;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\RequestLeaveController;
 use App\Http\Controllers\OvertimeWorkController;
 use App\Http\Controllers\UsersController;
+
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -56,6 +56,11 @@ Route::middleware('auth')->group(function () {
     Route::post('worktimes/store-per-day', [WorktimeController::class, 'storePerDay'])->name('worktimes.storeday');
 
     Route::get('/users', [UsersController::class, 'index'])->name('users.index');
+    Route::post('/users', [UsersController::class, 'store'])->name('users.store');
+    Route::delete('/users/{user}', [UsersController::class, 'destroy'])->name('users.destroy');
+
+
+    
 });
 
 

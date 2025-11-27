@@ -14,23 +14,33 @@ return new class extends Migration
         Schema::create('worktimes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('member_id');
-            $table->unsignedBigInteger('week_id');
+            $table->unsignedBigInteger('week_id')->nullable();
+
             $table->time('start_time');
             $table->time('end_time');
             $table->time('start_time2')->nullable();
             $table->time('end_time2')->nullable();
             $table->integer('half_day')->default(0);
-            $table->foreign('member_id')->references('id')->on('members')->onDelete('cascade');
-            $table->foreign('week_id')->references('id')->on('weeklies')->onDelete('set null');
+
+            $table->foreign('member_id')
+                ->references('id')->on('members')
+                ->onDelete('cascade');
+
+            $table->foreign('week_id')
+                ->references('id')->on('weeklies')
+                ->onDelete('set null');
+
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
+        Schema::table('worktimes', function (Blueprint $table) {
+            $table->dropForeign(['member_id']);
+            $table->dropForeign(['week_id']);
+        });
+
         Schema::dropIfExists('worktimes');
     }
 };

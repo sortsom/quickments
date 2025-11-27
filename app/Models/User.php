@@ -45,10 +45,7 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public function user()
-    {
-    return $this->belongsTo(User::class);
-    }
+
     public function role()
     {
         return $this->hasOne(Roles::class);
@@ -57,6 +54,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(Member::class);
     }
+
+    
 
 
 }
