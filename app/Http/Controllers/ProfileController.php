@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -40,6 +41,44 @@ class ProfileController extends Controller
     /**
      * Delete the user's account.
      */
+    public function updateAvatar(Request $request)
+    {
+        $request->validate([
+            'photo' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        $user = Auth::user();
+
+        // delete old photo if exists
+        if ($user->photo && Storage::disk('public')->exists($user->photo)) {
+            Storage::disk('public')->delete($user->photo);
+        }
+
+        // store new photo
+        $path = $request->file('photo')->store('photos', 'public');
+
+        $user->update([
+            'photo' => $path
+        ]);
+
+        return back()->with('success', 'Avatar updated successfully');
+    }
+
+    public function deleteAvatar()
+    {
+        $user = Auth::user();
+
+        if ($user->photo && Storage::disk('public')->exists($user->photo)) {
+            Storage::disk('public')->delete($user->photo);
+        }
+
+        $user->update([
+            'photo' => null
+        ]);
+
+        return back()->with('success', 'Avatar deleted successfully');
+    }
+
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [

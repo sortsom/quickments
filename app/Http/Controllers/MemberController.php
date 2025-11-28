@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Validation\Rule;
 use App\Models\Member;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MemberController extends Controller
 {
@@ -104,8 +105,15 @@ class MemberController extends Controller
      */
     public function destroy(Member $member)
     {
-        //
+        // delete photo if exists
+        if ($member->photo && Storage::disk('public')->exists($member->photo)) {
+            Storage::disk('public')->delete($member->photo);
+        }
+
+        // delete member record
         $member->delete();
-        return redirect()->route('members.index')->with('success', 'Member deleted successfully.');
+
+        return redirect()->route('members.index')
+                        ->with('success', 'Member deleted successfully.');
     }
 }

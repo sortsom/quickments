@@ -59,6 +59,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/users/{user}', [UsersController::class, 'update'])->name('users.update');
 
 
+    Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])
+    ->name('profile.avatar.update');
+
+    Route::delete('/profile/avatar', [ProfileController::class, 'deleteAvatar'])
+    ->name('profile.avatar.delete');
 
 
     
