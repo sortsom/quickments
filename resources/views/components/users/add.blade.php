@@ -5,60 +5,69 @@
 <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="row">
+
+        {{-- Select Member --}}
         <div class="col-md-6 mb-3">
             <label class="form-label">ឈ្មោះបុគ្គលិក</label>
             <select id="select-tags" name="member_id">
                 @foreach($members as $member)
-                <option value="{{ $member->id }}">{{ $member->name }}</option>
+                <option value="{{ $member->id }}">
+                    {{ $member->name }}
+                </option>
                 @endforeach
-
             </select>
-
         </div>
+
+        {{-- Role --}}
         <div class="col-md-6 mb-3">
             <label class="form-label">Role</label>
-            <select class="form-control " name="role_name">
+            <select class="form-control" name="role_name">
                 <option value="staff" selected>Staff</option>
                 <option value="admin">Admin</option>
             </select>
-
         </div>
 
+        {{-- Name --}}
         <div class="col-md-6 mb-3">
             <label class="form-label">Name</label>
-            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                placeholder="Your name" required>
+            <input type="text" name="name" placeholder="Your name" required
+                class="form-control @error('name') is-invalid @enderror">
             @error('name')
             <span class="invalid-feedback">{{ $message }}</span>
             @enderror
-
         </div>
+
+        {{-- Email --}}
         <div class="col-md-6 mb-3">
             <label class="form-label">Email</label>
-            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email"
-                placeholder="Your email" required>
+            <input type="email" name="email" placeholder="Your email" required
+                class="form-control @error('email') is-invalid @enderror">
             @error('email')
             <span class="invalid-feedback">{{ $message }}</span>
             @enderror
         </div>
+
+        {{-- Password --}}
         <div class="col-md-6 mb-3">
             <label class="form-label">Password</label>
-            <input type="text" class="form-control @error('password') is-invalid @enderror" name="password"
-                placeholder="Password" required>
+            <input type="password" name="password" placeholder="Password" required
+                class="form-control @error('password') is-invalid @enderror">
             @error('password')
             <span class="invalid-feedback">{{ $message }}</span>
             @enderror
-
         </div>
+
+        {{-- Profile Image --}}
         <div class="col-md-6 mb-3">
             <label class="form-label">Profile Image</label>
-            <input type="file" class="form-control" name="photo">
-
+            <input type="file" name="photo" class="form-control">
         </div>
+
     </div>
+
     <div class="modal-footer">
-        <a href="#" class="btn btn-secondary btn-3" data-bs-dismiss="modal"> Cancel
-        </a>
+        <a href="#" class="btn btn-secondary btn-3" data-bs-dismiss="modal">Cancel</a>
+
         <button type="submit" class="btn btn-primary btn-5 ms-auto">
             <x-icon.plus />
             <span>បង្កើតថ្មី</span>

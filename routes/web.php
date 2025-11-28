@@ -60,6 +60,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/users', [UsersController::class, 'index'])->name('users.index');
     Route::post('/users', [UsersController::class, 'store'])->name('users.store');
     Route::delete('/users/{user}', [UsersController::class, 'destroy'])->name('users.destroy');
+    Route::post('/users/{member}/unlink', [UsersController::class, 'unlinkStaff'])->name('users.unlinkstaff');
+    Route::patch('/users/{user}', [UsersController::class, 'update'])->name('users.update');
+
+
 
 
     
