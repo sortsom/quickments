@@ -106,6 +106,9 @@
                                                 អ៊ីមែល
                                             </th>
                                             <th class="text-center">
+                                                សិទ្ធិអ្នកប្រើប្រាស់
+                                            </th>
+                                            <th class="text-center">
                                                 ភ្ជាប់បុគ្គលិក
                                             </th>
 
@@ -128,6 +131,9 @@
                                                 {{ $user->email }}
                                             </td>
                                             <td>
+                                                {{ $user->role->role ?? 'No role' }}
+                                            </td>
+                                            <td>
                                                 @if($user->member)
                                                 {{ $user->member->name }}
                                                 @else
@@ -136,6 +142,20 @@
                                             </td>
                                             @if (in_array(Auth::user()->role->role, ['owner']))
                                             <td class="text-end">
+                                                <!-- Unlink Staff Button -->
+                                                @if ($user->member)
+                                                <form action="{{ route('users.unlinkstaff', $user->member->id) }}"
+                                                    method="POST" style="display:inline-block;"
+                                                    onsubmit="return confirm('Are you sure you want to unlink staff?')">
+                                                    @csrf
+
+                                                    <button type="submit"
+                                                        class="btn btn-1 btn-icon bg-warning text-white">
+                                                        <x-icon.link />
+                                                    </button>
+                                                </form>
+                                                @endif
+
 
                                                 <!-- Edit Button -->
                                                 <a href="#" class="btn btn-1 btn-icon bg-info text-white"
@@ -144,8 +164,9 @@
                                                     <x-icon.edit />
                                                 </a>
 
-                                                <!-- Delete Button -->
 
+
+                                                <!-- Delete Button -->
                                                 <form action="{{ route('users.destroy', $user->id) }}" method="POST"
                                                     style="display:inline-block;"
                                                     onsubmit="return confirm('Are you sure you want to delete this record?')">
@@ -160,13 +181,18 @@
                                                 </form>
                                             </td>
                                             @endif
+                                             <x-popup id="edit-{{ $user->id }}" title="កែសម្រួល">
+                                                <x-users.edit :user="$user" :members="$members" />
+                                            </x-popup>
+                                            <!-- EDIT MODAL -->
                                         </tr>
+                                        @empty
+                                        <tr>
+                                            <td colspan="5" class="text-center py-4">No members found.</td>
+                                        </tr>
+                                        @endforelse
                                     </tbody>
-                                    @empty
-                                    <tr>
-                                        <td colspan="5" class="text-center py-4">No members found.</td>
-                                    </tr>
-                                    @endforelse
+
                                 </table>
                             </div>
                             <div class="card-footer d-flex align-items-center">
