@@ -15,7 +15,7 @@ class RequestLeave extends Model
         'end_time',
         'reason',
         'photo',
-        'status',
+        'status_id',
         'type',
         'type_leave',
         'approve_by',
@@ -25,6 +25,7 @@ class RequestLeave extends Model
 protected $casts = [
     'start_time' => 'datetime',
     'end_time' => 'datetime',
+    'approve_date'=>'datetime',
 ];
 
 
@@ -36,7 +37,7 @@ protected $casts = [
 // better name: status()
 public function status()
 {
-    return $this->belongsTo(Status::class, 'status'); // FK column = status
+    return $this->belongsTo(Status::class, 'status_id'); // FK column = status
 }
 
 public function member()

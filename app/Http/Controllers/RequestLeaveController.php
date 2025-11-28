@@ -127,4 +127,42 @@ class RequestLeaveController extends Controller
     return redirect()->route('requestleave.index')
         ->with('success', 'Request deleted successfully');
     }
+
+
+    public function approve(Request $request, RequestLeave $requestleave)
+{
+    $user = Auth::user();
+
+    if (!in_array(Auth::user()->role->role, ['owner', 'admin'])) {
+        abort(403);
+    }
+
+     $approveStatusId = Status::where('name', 'Approve')->value('id');
+
+    $requestleave->status_id = $approveStatusId;     // or ->status_id if you rename
+     
+    $requestleave->approve_by = Auth::user()->id;
+    $requestleave->approve_date = now();
+    $requestleave->save();
+
+    return back()->with('success', 'Approved successfully');
+}
+public function Reject(Request $request, RequestLeave $requestleave)
+{
+    $user = Auth::user();
+
+    if (!in_array(Auth::user()->role->role, ['owner', 'admin'])) {
+        abort(403);
+    }
+
+     $approveStatusId = Status::where('name', 'Reject')->value('id');
+
+    $requestleave->status_id = $approveStatusId;     // or ->status_id if you rename
+     
+    $requestleave->approve_by = Auth::user()->id;
+    $requestleave->approve_date = now();
+    $requestleave->save();
+
+    return back()->with('success', 'Approved successfully');
+}
 }

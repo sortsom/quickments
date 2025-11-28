@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
         MemberSeeder::class,
         StatusSeeder::class,
         AttendanceSeeder::class,
-        WorktimeSeeder::class,
+        LeaveTypeSeeder::class,
+        // WorktimeSeeder::class,
     ]);
     }
 }

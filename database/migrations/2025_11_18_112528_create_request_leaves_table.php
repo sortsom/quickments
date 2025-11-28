@@ -21,7 +21,7 @@ return new class extends Migration
             $table->enum('type', ['full_day','half_day_morning','half_day_afternoon'])->default('full_day');
             $table->text('reason')->nullable();
             $table->string('photo');
-            $table->integer('status')->default(0);
+            $table->integer('status_id')->default(0);
             $table->integer('type_leave');
             $table->integer('approve_by')->nullable();
             $table->datetime('approve_date')->nullable();
