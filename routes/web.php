@@ -36,6 +36,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('requestleave',RequestLeaveController::class);
     Route::post('requestleave/{requestleave}/approve', [RequestLeaveController::class, 'approve'])
     ->name('requestleave.approve');
+    Route::post('requestleave/{requestleave}/reject', [RequestLeaveController::class, 'reject'])
+    ->name('requestleave.reject');
     
     Route::resource('overtime',OvertimeWorkController::class);
 
