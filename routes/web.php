@@ -9,7 +9,6 @@ use App\Http\Controllers\LeaveTypeController;
 use App\Http\Controllers\WorktimeController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\RequestLeaveController;
-use App\Http\Controllers\OvertimeWorkController;
 use App\Http\Controllers\UsersController;
 
 
@@ -37,9 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::post('requestleave/{requestleave}/approve', [RequestLeaveController::class, 'approve'])
     ->name('requestleave.approve');
     
-    Route::resource('overtime',OvertimeWorkController::class);
-
-    
+   
 
 
     // Vannak
