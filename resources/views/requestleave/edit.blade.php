@@ -1,29 +1,29 @@
 <x-app-layout>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const memberSelect = document.getElementById('memberSelect');
-            const leaveTypeSelect = document.getElementById('leaveTypeSelect');
-            const warningMsg = document.getElementById('leaveTypeMessage');
+    document.addEventListener('DOMContentLoaded', function() {
+        const memberSelect = document.getElementById('memberSelect');
+        const leaveTypeSelect = document.getElementById('leaveTypeSelect');
+        const warningMsg = document.getElementById('leaveTypeMessage');
 
-            function validateLeaveType() {
-                const memberGender = memberSelect.options[memberSelect.selectedIndex]?.dataset.gender;
-                const allowed = leaveTypeSelect.options[leaveTypeSelect.selectedIndex]?.dataset.allowed;
+        function validateLeaveType() {
+            const memberGender = memberSelect.options[memberSelect.selectedIndex]?.dataset.gender;
+            const allowed = leaveTypeSelect.options[leaveTypeSelect.selectedIndex]?.dataset.allowed;
 
-                if (!memberGender || !allowed) {
-                    warningMsg.classList.add('d-none');
-                    return;
-                }
-
-                if (allowed === 'all' || allowed === memberGender) {
-                    warningMsg.classList.add('d-none');
-                } else {
-                    warningMsg.classList.remove('d-none');
-                }
+            if (!memberGender || !allowed) {
+                warningMsg.classList.add('d-none');
+                return;
             }
 
-            memberSelect.addEventListener('change', validateLeaveType);
-            leaveTypeSelect.addEventListener('change', validateLeaveType);
-        });
+            if (allowed === 'all' || allowed === memberGender) {
+                warningMsg.classList.add('d-none');
+            } else {
+                warningMsg.classList.remove('d-none');
+            }
+        }
+
+        memberSelect.addEventListener('change', validateLeaveType);
+        leaveTypeSelect.addEventListener('change', validateLeaveType);
+    });
     </script>
     <div class="container mt-5">
         <form action="{{ route('requestleave.update', $requests->id) }}" method="POST" enctype="multipart/form-data">
@@ -38,14 +38,14 @@
                         <select id="memberSelect" name="member_id" class="form-select" required>
                             <option value="">-- Select Member --</option>
                             @foreach ($members as $member)
-                                <option value="{{ $member->id }}" data-gender="{{ strtolower($member->gender) }}"
-                                    {{ old('member_id', $requests->member_id) == $member->id ? 'selected' : '' }}>
-                                    {{ $member->name }}
-                                </option>
+                            <option value="{{ $member->id }}" data-gender="{{ strtolower($member->gender) }}"
+                                {{ old('member_id', $requests->member_id) == $member->id ? 'selected' : '' }}>
+                                {{ $member->name }}
+                            </option>
                             @endforeach
                         </select>
                         @error('member_id')
-                            <span class="invalid-feedback d-block">{{ $message }}</span>
+                        <span class="invalid-feedback d-block">{{ $message }}</span>
                         @enderror
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                         <input type="number" name="date" class="form-control @error('date') is-invalid @enderror"
                             value="{{ old('date', $requests->date) }}" required>
                         @error('date')
-                            <span class="invalid-feedback d-block">{{ $message }}</span>
+                        <span class="invalid-feedback d-block">{{ $message }}</span>
                         @enderror
                     </div>
                 </div>
@@ -70,9 +70,9 @@
                         <label class="form-label">ថ្ងៃចាប់ផ្តើម</label>
                         <input type="date" name="start_time"
                             class="form-control @error('start_time') is-invalid @enderror"
-                            value="{{ old('start_time', $requests->start_time) }}">
+                            value="{{ old('start_time', \Carbon\Carbon::parse($requests->start_time)->format('Y-m-d')) }}">
                         @error('start_time')
-                            <span class="invalid-feedback d-block">{{ $message }}</span>
+                        <span class="invalid-feedback d-block">{{ $message }}</span>
                         @enderror
                     </div>
                 </div>
@@ -81,11 +81,10 @@
                 <div class="col-6">
                     <div class="mb-3">
                         <label class="form-label">ថ្ងៃបញ្ចប់</label>
-                        <input type="date" name="end_time"
-                            class="form-control @error('end_time') is-invalid @enderror"
-                            value="{{ old('end_time', $requests->end_time) }}">
+                        <input type="date" name="end_time" class="form-control @error('end_time') is-invalid @enderror"
+                            value="{{ old('end_time', \Carbon\Carbon::parse($requests->end_time)->format('Y-m-d')) }}">
                         @error('end_time')
-                            <span class="invalid-feedback d-block">{{ $message }}</span>
+                        <span class="invalid-feedback d-block">{{ $message }}</span>
                         @enderror
                     </div>
                 </div>
@@ -99,17 +98,17 @@
                         <select id="leaveTypeSelect" name="type_leave" class="form-select" required>
                             <option value="">-- Select Leave Type --</option>
                             @foreach ($leavetypes as $type)
-                                <option value="{{ $type->id }}" data-allowed="{{ strtolower($type->allowed) }}"
-                                    {{ old('type_leave', $requests->type_leave) == $type->id ? 'selected' : '' }}>
-                                    {{ $type->name_kh }}
-                                </option>
+                            <option value="{{ $type->id }}" data-allowed="{{ strtolower($type->allowed) }}"
+                                {{ old('type_leave', $requests->type_leave) == $type->id ? 'selected' : '' }}>
+                                {{ $type->name_kh }}
+                            </option>
                             @endforeach
                         </select>
                         <small id="leaveTypeMessage" class="text-danger d-none">
                             ខ្លួនឯងប្រុស​ ដាក់ច្បាប់ពោះធំមិនកើតទេ
                         </small>
                         @error('type_leave')
-                            <span class="invalid-feedback d-block">{{ $message }}</span>
+                        <span class="invalid-feedback d-block">{{ $message }}</span>
                         @enderror
                     </div>
                 </div>
@@ -119,8 +118,8 @@
                     <div class="mb-3">
                         <label class="form-label">ប្រភេទសម្រាក</label>
                         <select name="type" class="form-control @error('type') is-invalid @enderror" required>
-                            <option value="full_day"
-                                {{ old('type', $requests->type) == 'full_day' ? 'selected' : '' }}>Full Day</option>
+                            <option value="full_day" {{ old('type', $requests->type) == 'full_day' ? 'selected' : '' }}>
+                                Full Day</option>
                             <option value="half_day_morning"
                                 {{ old('type', $requests->type) == 'half_day_morning' ? 'selected' : '' }}>Half Day
                                 Morning</option>
@@ -129,7 +128,7 @@
                                 Afternoon</option>
                         </select>
                         @error('type')
-                            <span class="invalid-feedback d-block">{{ $message }}</span>
+                        <span class="invalid-feedback d-block">{{ $message }}</span>
                         @enderror
                     </div>
                 </div>
@@ -138,9 +137,10 @@
             {{-- Reason --}}
             <div class="mb-3">
                 <label class="form-label">មូលហេតុសុំបែប Professional??</label>
-                <textarea name="reason" class="form-control @error('reason') is-invalid @enderror" rows="3">{{ old('reason', $requests->reason) }}</textarea>
+                <textarea name="reason" class="form-control @error('reason') is-invalid @enderror"
+                    rows="3">{{ old('reason', $requests->reason) }}</textarea>
                 @error('reason')
-                    <span class="invalid-feedback d-block">{{ $message }}</span>
+                <span class="invalid-feedback d-block">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -150,14 +150,14 @@
                 <input type="file" name="photo" class="form-control @error('photo') is-invalid @enderror">
 
                 @if ($requests->photo)
-                    <div class="mt-2">
-                        <img src="{{ asset('storage/' . $requests->photo) }}"
-                            style="max-width: 150px; max-height: 150px; object-fit: cover; border-radius: 6px;">
-                    </div>
+                <div class="mt-2">
+                    <img src="{{ asset('storage/' . $requests->photo) }}"
+                        style="max-width: 150px; max-height: 150px; object-fit: cover; border-radius: 6px;">
+                </div>
                 @endif
 
                 @error('photo')
-                    <span class="invalid-feedback d-block">{{ $message }}</span>
+                <span class="invalid-feedback d-block">{{ $message }}</span>
                 @enderror
             </div>
 

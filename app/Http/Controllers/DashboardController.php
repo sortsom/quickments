@@ -16,22 +16,28 @@ class DashboardController extends Controller
         $requestleave = RequestLeave::whereDate('date', today())->count();
         $activeMembers = Member::where('status', '1')->count();
         $users = User::count();
-        
-        
-        $dataQuery = Attendance::with(['member', 'details'])
-            ->orderBy('date', 'desc');
+        $dataQuery = Attendance::with(['member', 'details'])->orderBy('date', 'desc');
 
         $user = Auth::user();
+        $role = $user->role->role;
 
-        // Check role
-        if (!in_array($user->role->role, ['owner', 'admin'])) 
-        {
+        // Owner/Admin → Today only
+        if (in_array($role, ['owner', 'admin'])) {
+            $dataQuery->whereDate('date', now()->toDateString());
+
+        } else {
+            // Normal staff → last 7 days only
             $memberId = Member::where('user_id', $user->id)->value('id');
-            $dataQuery->where('member_id', $memberId);
+
+            $dataQuery->where('member_id', $memberId)
+                    ->whereBetween('date', [
+                            now()->subDays(7)->toDateString(),
+                            now()->toDateString()
+                    ]);
         }
-        $data = $dataQuery->paginate(2);
-        // $data = $dataQuery->get();
-        // echo($data);
-        return view('dashboard',compact('attendance','requestleave','activeMembers','users','data'));
+
+        $data = $dataQuery->paginate(5);
+
+        return view('dashboard', compact('attendance','requestleave','activeMembers','users','data'));
     }
 }

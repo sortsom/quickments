@@ -15,9 +15,9 @@
                 <select name="member" class="form-control">
                     <option value="">All Members</option>
                     @foreach ($members as $m)
-                        <option value="{{ $m->id }}" {{ request('member') == $m->id ? 'selected' : '' }}>
-                            {{ $m->name }}
-                        </option>
+                    <option value="{{ $m->id }}" {{ request('member') == $m->id ? 'selected' : '' }}>
+                        {{ $m->name }}
+                    </option>
                     @endforeach
                 </select>
             </div>
@@ -44,59 +44,67 @@
 
         </form>
 
-        <!-- SHOW TABLE ONLY AFTER APPLY FILTER -->
-        <!-- SHOW TABLE ONLY AFTER APPLY FILTER -->
         @if (request()->filled('member') || request()->filled('from') || request()->filled('to'))
-            <!-- COMPANY / USER INFO -->
-            <div class="mb-3">
-                <img src="{{ asset('images/Logo.png') }}" alt="Logo" height="30" width="120px;">
 
-                <div class="mt-2">
-                    <strong>User:</strong> {{ auth()->user()->name }} <br>
-                    <strong>Start Date:</strong> {{ request('from') ?: '-' }} <br>
-                    <strong>End Date:</strong> {{ request('to') ?: '-' }}
-                </div>
+        <div class="mb-3">
+            <img src="{{ asset('images/Logo.png') }}" alt="Logo" height="30" width="120px;">
+
+            <div class="mt-2">
+                <strong>User:</strong> {{ auth()->user()->name }} <br>
+                <strong>Start Date:</strong> {{ request('from') ?: '-' }} <br>
+                <strong>End Date:</strong> {{ request('to') ?: '-' }}
             </div>
+        </div>
 
 
-            <div class="card">
-                <div class="card-body p-0">
-                    <table class="table table-bordered table-sm m-0">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>User</th>
-                                <th>Member</th>
-                                <th>Type</th>
-                                <th>Status</th>
-                                <th>Approver</th>
-                                <th>Requested At</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($requests as $r)
-                                <tr>
-                                    <td>{{ $r->id }}</td>
-                                    <td>{{ $r->user->name ?? '-' }}</td>
-                                    <td>{{ $r->member->name ?? '-' }}</td>
-                                    <td>{{ $r->typeLeave->name ?? '-' }}</td>
-                                    <td>{{ $r->status->name ?? '-' }}</td>
-                                    <td>{{ $r->approver->name ?? '-' }}</td>
-                                    <td>{{ optional($r->created_at)->format('Y-m-d') ?? '-' }}</td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="7" class="text-center">No Data Found</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
+        <div class="card">
+            <div class="card-body p-0">
+                <table class="table table-bordered table-sm m-0">
+                    <thead>
+                        <tr>
+                            <th>ល.រ</th>
+                            <th>Member</th>
+                            <th>ថ្ងៃចាប់ផ្ដើម</th>
+                            <th>ថ្ងៃបញ្ចប់</th>
+                            <th>ប្រភេទច្បាប់</th>
+                            <th>ស្ថានភាព</th>
+                            <th>អ្នកអនុម័ត</th>
+                            <th>ថ្ងៃស្នើរសុំ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($requests as $r)
+
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+
+                            <td>{{ $r->member->name_kh ?? '' }}</td>
+
+                            <td>{{ \Carbon\Carbon::parse($r->start_time)->format('Y-m-d') }}</td>
+
+                            <td>{{ \Carbon\Carbon::parse($r->end_time)->format('Y-m-d') }}</td>
+
+                            <td>{{ $r->typeLeave->name_kh ?? '' }}</td>
+
+                            <td>{{ $r->status->name_kh ?? '' }}</td>
+
+                            <td>{{ $r->approver->name ?? '' }}</td>
+
+                            <td>{{ \Carbon\Carbon::parse($r->created_at)->format('Y-m-d') }}</td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="7" class="text-center">No Data Found</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
+        </div>
         @else
-            <div class="alert alert-info">
-                Please click <strong>Apply Filter</strong> to view report data.
-            </div>
+        <div class="alert alert-info">
+            Please click <strong>Apply Filter</strong> to view report data.
+        </div>
         @endif
 
 
@@ -104,35 +112,35 @@
 
     <!-- PRINT STYLE -->
     <style>
-        @media print {
+    @media print {
 
-            /* Remove browser header/footer */
-            @page {
-                margin: 0 !important;
-                size: auto;
-            }
-
-            body {
-                margin: 2mm !important;
-            }
-
-            /* Hide interactive elements */
-            .no-print {
-                display: none !important;
-            }
-
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                font-size: 12px;
-            }
-
-            table th,
-            table td {
-                border: 1px solid #000 !important;
-                padding: 5px !important;
-            }
+        /* Remove browser header/footer */
+        @page {
+            margin: 0 !important;
+            size: auto;
         }
+
+        body {
+            margin: 2mm !important;
+        }
+
+        /* Hide interactive elements */
+        .no-print {
+            display: none !important;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        table th,
+        table td {
+            border: 1px solid #000 !important;
+            padding: 5px !important;
+        }
+    }
     </style>
 
 </x-app-layout>
