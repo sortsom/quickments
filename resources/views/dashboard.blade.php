@@ -22,14 +22,14 @@
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-auto">
-                                        <span
-                                            class="bg-primary text-white avatar"><!-- Download SVG icon from http://tabler.io/icons/icon/currency-dollar -->
+                                        <span class="bg-primary text-white avatar">
+                                            <!-- Download SVG icon from http://tabler.io/icons/icon/currency-dollar -->
                                             <x-icon.sign />
                                         </span>
                                     </div>
                                     <div class="col">
-                                        <div class="font-weight-medium"id="khmer">កត់ត្រាវត្តមាន</div>
-                                        <div class="text-secondary">12 waiting payments</div>
+                                        <div class="font-weight-medium" id="khmer">កត់ត្រាវត្តមាន</div>
+                                        <div class="text-secondary">{{$attendance}} Users/today</div>
                                     </div>
                                 </div>
                             </div>
@@ -40,14 +40,14 @@
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-auto">
-                                        <span
-                                            class="bg-green text-white avatar"><!-- Download SVG icon from http://tabler.io/icons/icon/shopping-cart -->
+                                        <span class="bg-green text-white avatar">
+                                            <!-- Download SVG icon from http://tabler.io/icons/icon/shopping-cart -->
                                             <x-icon.prochese />
                                         </span>
                                     </div>
                                     <div class="col">
-                                        <div class="font-weight-medium"id="khmer">សុំច្បាប់</div>
-                                        <div class="text-secondary">32 shipped</div>
+                                        <div class="font-weight-medium" id="khmer">សុំច្បាប់</div>
+                                        <div class="text-secondary">{{$requestleave}} / នាក់</div>
                                     </div>
                                 </div>
                             </div>
@@ -63,8 +63,8 @@
                                         </span>
                                     </div>
                                     <div class="col">
-                                        <div class="font-weight-medium"id="khmer">ធ្វើការថែមម៉ោង</div>
-                                        <div class="text-secondary">16 today</div>
+                                        <div class="font-weight-medium" id="khmer">អ្នកប្រើប្រាស់</div>
+                                        <div class="text-secondary">{{$users}} / user</div>
                                     </div>
                                 </div>
                             </div>
@@ -75,14 +75,14 @@
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-auto">
-                                        <span
-                                            class="bg-facebook text-white avatar"><!-- Download SVG icon from http://tabler.io/icons/icon/brand-facebook -->
+                                        <span class="bg-facebook text-white avatar">
+                                            <!-- Download SVG icon from http://tabler.io/icons/icon/brand-facebook -->
                                             <x-icon.user />
                                         </span>
                                     </div>
                                     <div class="col">
                                         <div class="font-weight-medium" id="khmer">សមាជិក</div>
-                                        <div class="text-secondary">21 today</div>
+                                        <div class="text-secondary">{{$activeMembers}} / នាក់</div>
                                     </div>
                                 </div>
                             </div>
@@ -91,6 +91,7 @@
                 </div>
             </div>
 
+            {{--
             <div class="col-12 mt-5">
                 <div class="card">
                     <div class="card-header">
@@ -101,16 +102,15 @@
                             <div class="text-secondary">
                                 Show
                                 <div class="mx-2 d-inline-block">
-                                    <input type="text" class="form-control form-control-sm" value="8"
-                                        size="3" aria-label="Invoices count">
+                                    <input type="text" class="form-control form-control-sm" value="8" size="3"
+                                        aria-label="Invoices count">
                                 </div>
                                 entries
                             </div>
                             <div class="ms-auto text-secondary">
                                 Search:
                                 <div class="ms-2 d-inline-block">
-                                    <input type="text" class="form-control form-control-sm"
-                                        aria-label="Search invoice">
+                                    <input type="text" class="form-control form-control-sm" aria-label="Search invoice">
                                 </div>
                             </div>
                         </div>
@@ -170,9 +170,8 @@
                                         <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
                                             <!-- Download SVG icon from http://tabler.io/icons/icon/chevron-left -->
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                class="icon icon-1">
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
                                                 <path d="M15 6l-6 6l6 6"></path>
                                             </svg>
                                         </a>
@@ -196,9 +195,8 @@
                                         <a class="page-link" href="#">
                                             <!-- Download SVG icon from http://tabler.io/icons/icon/chevron-right -->
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                class="icon icon-1">
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
                                                 <path d="M9 6l6 6l-6 6"></path>
                                             </svg>
                                         </a>
@@ -208,7 +206,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> 
+            --}}
         </div>
     </div>
     </div>

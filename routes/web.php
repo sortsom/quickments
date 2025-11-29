@@ -9,8 +9,8 @@ use App\Http\Controllers\LeaveTypeController;
 use App\Http\Controllers\WorktimeController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\RequestLeaveController;
-use App\Http\Controllers\OvertimeWorkController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\DashboardController;
 
 
 Route::get('/', function () {
@@ -19,9 +19,9 @@ Route::get('/', function () {
     }
     return view('auth.login');
 });
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -39,9 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::post('requestleave/{requestleave}/reject', [RequestLeaveController::class, 'reject'])
     ->name('requestleave.reject');
     
-    Route::resource('overtime',OvertimeWorkController::class);
-
-    
+   
 
 
     // Vannak
@@ -64,6 +62,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/users/{user}', [UsersController::class, 'update'])->name('users.update');
 
 
+    Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])
+    ->name('profile.avatar.update');
+
+    Route::delete('/profile/avatar', [ProfileController::class, 'deleteAvatar'])
+    ->name('profile.avatar.delete');
 
 
     

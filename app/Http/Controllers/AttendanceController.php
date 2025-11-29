@@ -224,7 +224,7 @@ class AttendanceController extends Controller
         // Get worktime for this day of week
         $dayOfWeek = Carbon::parse($date)->dayOfWeek + 1; // your system uses 1–7
         $worktime  = Worktime::where('member_id', $memberId)
-                            ->where('day', $dayOfWeek)
+                            ->where('week_id', $dayOfWeek)
                             ->first();
 
         if (!$worktime) {
