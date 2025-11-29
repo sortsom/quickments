@@ -1,59 +1,137 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+សៀវភៅណែនាំដំឡើង និងប្រើប្រាស់ (សម្រាប់ Quickments)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+ខាងក្រោមជាជំហានលម្អិតក្នុងការដំឡើង និងចាប់ផ្តើមប្រព័ន្ធ (ជាភាសាខ្មែរ) — អាន និងអនុវត្តតាមជាកថាខ្លីៗ។
 
-## About Laravel
+តម្រូវការមុនដំបូង
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+PHP ≥ 8.3
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Composer (latest)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Git
 
-## Learning Laravel
+Web server bundle: Laragon ឬ XAMPP (ប្រសិនបើប្រើ Laragon ត្រូវរក្សា project ក្នុង C:\laragon\www ជាធម្មតា; ប្រសិនបើ XAMPP រក្សា ក្នុង C:\xampp\htdocs)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+MySQL (អាចមកជាមួយ Laragon/XAMPP)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+ជំហានដំឡើង (Commands)
 
-## Laravel Sponsors
+Clone project
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+git clone https://github.com/sortsom/quickments.git
+cd quickments
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+ប្រសិនបើប្រើ Laragon ឬ XAMPP — សូមត្រូវ clone ទៅ folder www ឬ htdocs ដូចដែលបានលើកលែង។
 
-## Contributing
+ចម្លង និងកែ .env
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+cp .env.example .env
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+បើ Windows: ចម្លងផ្ទាល់ដោយ Explorer ឬ PowerShell:
 
-## Security Vulnerabilities
+copy .env.example .env
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+កំណត់ Database ក្នុង .env
+បើអ្នក belum have database គី BigAdmin/PhpMyAdmin → បង្កើត database ឈ្មោះ quickments (ឬឈ្មោះផ្សេង ប្តូរ DB_DATABASE តាមអត្រា)។
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=quickments
+DB_USERNAME=root
+DB_PASSWORD=
+
+
+(បំរែបំរួល username/password ប្រសិនបើអ្នកកំណត់ផ្សេង)
+
+ដំឡើង dependence
+
+ជាធម្មតាគួរប្រើ composer install មុន composer update ដើម្បីដកចេញ vendor ពី packagist។
+
+composer install
+
+
+បង្កើត application key
+
+php artisan key:generate
+
+
+(បើលេីកឡើង «No application encryption key has been specified.» នោះ command នេះជាការដោះស្រាយ)
+
+ចូលកម្មវិធី database migration
+
+ប្រសិនបើត្រូវ migrate ទាំងអស់:
+
+php artisan migrate
+
+
+ប្រសិនបើចង់ refresh និង seed (ជាធម្មតាសម្រាប់ dev/testing):
+
+php artisan migrate:refresh --seed
+
+
+កំណត់: ប្រសិនបើ tables មានហើយ និងបង្ហាញ error table already exists អ្នកអាច migrate:rollback ឬ migrate:fresh --seed (ហានិភ័យលុបទិន្នន័យ)៖
+
+php artisan migrate:rollback
+# ឬ (លុប table ទាំងអស់ -> migrate + seed)
+php artisan migrate:fresh --seed
+
+
+(ជាជម្រុញ) បើអ្នកប្រើការផ្ទុកឯកសារ storage (avatar, files)
+
+php artisan storage:link
+
+
+ចាប់ផ្តើម server (local dev)
+
+ប្រសិនបើប្រើ Laragon/XAMPP -> បើក Apache + MySQL រួចចូល URL ដូចជា http://quickments.test ឬ http://localhost/quickments/public (អាសយដ្ឋានអាស្រ័យលើ configuration)
+
+ប្រសិនបើចង់ run artisan server:
+
+php artisan serve
+# បើក http://127.0.0.1:8000
+
+ការចូល (login) — user seeded
+
+បើ project មាន seeder សម្រាប់ user, ទៅកាន់ database/seeders/UserSeeder.php (ឬ Userseeder.php) ហើយមើល username/password ដែលបានកំណត់ (seed)។
+
+ប្រសិនបើ seeder សរសេរ hashed password អ្នកអាចមើល email/username នៅក្នុង seeder ហើយ reset password តាម PhpMyAdmin ប្រសិនចាំបាច់។
+
+ជាគន្លឹះ៖ ប្រសិន UserSeeder មិនបញ្ជាក់ password ដែលអាចចេះបាន ត្រូវ ដាក់យកណាមួយក្នុង seeder ឬ run tinker ដើម្បី update password:
+
+ការពិពណ៌នាបញ្ហាទម្រង់ទូទៅ និងដំណោះស្រាយ
+
+No application encryption key → ហៅ php artisan key:generate
+
+Base table or view already exists → run php artisan migrate:rollback ឬ migrate:fresh --seed
+
+DB connection error → ត្រួតពិនិត្យ .env (DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, DB_PASSWORD) និងពិនិត្យថា MySQL បានបើក។
+
+Composer memory error (Windows) → ប្រើ composer install --no-dev ឬ បើ Linux, អាច Run COMPOSER_MEMORY_LIMIT=-1 composer install
+
+ពិចារណាបន្ថែម (best practices)
+
+កុំចែក .env នៅក្នុង git repository។
+
+សម្រាប់ production: កំណត់ឲ្យ APP_ENV=production និង APP_DEBUG=false ហើយ configure web server properly (Apache / Nginx) និង SSL។
+
+ប្រើ Git branches ហើយ push/pull មុន commit changes។
+
+សង្ខេបលឿន (Quick checklist)
+
+Clone project → git clone ...
+
+cp .env.example .env ហើយកែ DB។
+
+composer install
+
+php artisan key:generate
+
+php artisan migrate ឬ php artisan migrate:refresh --seed
+
+php artisan storage:link (ប្រសិនបើប្រើ storage)
+
+ដំណើរការ local server (php artisan serve ឬ តាម Laragon/XAMPP)
