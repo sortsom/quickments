@@ -62,7 +62,7 @@
                                 <th>Approved By</th>
                                 <th>Approved Date</th>
                                 @if (in_array(auth()->user()->role->role, ['owner', 'admin']))
-                                    <th>Updated</th>
+                                <th>Updated</th>
                                 @endif
 
                             </tr>
@@ -70,84 +70,84 @@
 
                         <tbody>
                             @forelse ($requests as $request)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $request->member->name ?? '-' }}</td>
-                                    <td>{{ $request->date }}</td>
-                                    <td>{{ $request->start_time->format('d.m.Y') }}</td>
-                                    <td>{{ $request->end_time->format('d.m.Y') }}</td>
-                                    <td>{{ $request->typeLeave->name_kh ?? ($request->typeLeave->name ?? '-') }}</td>
-                                    <td>{{ $request->type }}</td>
-                                    <td>
-                                        @php
-                                            $name = $request->status->name ?? 'Pending';
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $request->member->name ?? '-' }}</td>
+                                <td>{{ $request->date }}</td>
+                                <td>{{ $request->start_time->format('d.m.Y') }}</td>
+                                <td>{{ $request->end_time->format('d.m.Y') }}</td>
+                                <td>{{ $request->typeLeave->name_kh ?? ($request->typeLeave->name ?? '-') }}</td>
+                                <td>{{ $request->type }}</td>
+                                <td>
+                                    @php
+                                    $name = $request->status->name ?? 'Pending';
 
-                                            $color = match ($name) {
-                                                'Pending' => 'bg-yellow',
-                                                'Reject' => 'bg-red',
-                                                'Approve' => 'bg-green',
-                                                'Cancel' => 'bg-gray',
-                                                default => 'bg-secondary',
-                                            };
-                                        @endphp
+                                    $color = match ($name) {
+                                    'Pending' => 'bg-yellow',
+                                    'Reject' => 'bg-red',
+                                    'Approve' => 'bg-green',
+                                    'Cancel' => 'bg-gray',
+                                    default => 'bg-secondary',
+                                    };
+                                    @endphp
 
-                                        <span class="badge {{ $color }} text-white">{{ $name }}</span>
-                                        {{-- APPROVE BUTTON --}}
-                                        @if (in_array(auth()->user()->role->role, ['owner', 'admin']) && $name !== 'Approve' && $name !== 'Reject')
-                                            <form action="{{ route('requestleave.approve', $request->id) }}"
-                                                method="POST" style="display:inline;">
-                                                @csrf
-                                                <button type="submit" class="badge bg-green text-white border-0"
-                                                    style="cursor:pointer;">
-                                                    Approve
-                                                </button>
-                                            </form>
-                                        @endif
+                                    <span class="badge {{ $color }} text-white">{{ $name }}</span>
+                                    {{-- APPROVE BUTTON --}}
+                                    @if (in_array(auth()->user()->role->role, ['owner', 'admin']) && $name !== 'Approve'
+                                    && $name !== 'Reject')
+                                    <form action="{{ route('requestleave.approve', $request->id) }}" method="POST"
+                                        style="display:inline;">
+                                        @csrf
+                                        <button type="submit" class="badge bg-green text-white border-0"
+                                            style="cursor:pointer;">
+                                            Approve
+                                        </button>
+                                    </form>
+                                    @endif
 
-                                        {{-- REJECT BUTTON --}}
-                                        @if (in_array(auth()->user()->role->role, ['owner', 'admin']) && $name !== 'Approve' && $name !== 'Reject')
-                                            <form action="{{ route('requestleave.reject', $request->id) }}"
-                                                method="POST" style="display:inline;">
-                                                @csrf
-                                                <button type="submit" class="badge bg-red text-white border-0"
-                                                    style="cursor:pointer;">
-                                                    Reject
-                                                </button>
-                                            </form>
-                                        @endif
+                                    {{-- REJECT BUTTON --}}
+                                    @if (in_array(auth()->user()->role->role, ['owner', 'admin']) && $name !== 'Approve'
+                                    && $name !== 'Reject')
+                                    <form action="{{ route('requestleave.reject', $request->id) }}" method="POST"
+                                        style="display:inline;">
+                                        @csrf
+                                        <button type="submit" class="badge bg-red text-white border-0"
+                                            style="cursor:pointer;">
+                                            Reject
+                                        </button>
+                                    </form>
+                                    @endif
 
-                                    </td>
-                                    <td>{{ $request->approver->name ?? '-' }}</td>
+                                </td>
+                                <td>{{ $request->approver->name ?? '-' }}</td>
 
-                                    {{-- <td>{{ $request->approve_by ?? '-' }}</td> --}}
-                                    <td>{{ $request->approve_date }}</td>
-                                    <td>
-                                        @if (in_array(auth()->user()->role->role, ['owner', 'admin']))
-                                            <!-- Edit Button (open modal) -->
+                                {{-- <td>{{ $request->approve_by ?? '-' }}</td> --}}
+                                <td>{{ $request->approve_date }}</td>
+                                @if (in_array(auth()->user()->role->role, ['owner', 'admin']))
+                                <td>
+                                    <a href="{{ route('requestleave.edit', $request->id) }}">
+                                        <x-edit />
+                                    </a>
+                                    <form action="{{ route('requestleave.destroy', $request->id) }}" method="POST"
+                                        style="display:inline;"
+                                        onsubmit="return confirm('Are you sure you want to delete this?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-link text-red p-0 m-0"
+                                            style="border:none;">
+                                            <x-trash />
+                                        </button>
+                                    </form>
+                                </td>
+                                @endif
 
-                                            <a href="{{ route('requestleave.edit', $request->id) }}"><x-edit /></a>
-                                            <form action="{{ route('requestleave.destroy', $request->id) }}"
-                                                method="POST" style="display:inline;"
-                                                onsubmit="return confirm('Are you sure you want to delete this?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-link text-red p-0 m-0"
-                                                    style="border:none;">
-                                                    <x-trash />
-                                                </button>
-                                            </form>
-                                        @endif
-
-
-                                    </td>
-
-                                </tr>
+                            </tr>
                             @empty
-                                <tr>
-                                    <td colspan="11" class="text-center text-muted">
-                                        No leave requests found.
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td colspan="11" class="text-center text-muted">
+                                    No leave requests found.
+                                </td>
+                            </tr>
                             @endforelse
                         </tbody>
                     </table>
@@ -155,62 +155,62 @@
 
 
                     <script>
-                        const advancedTable = {
-                            headers: [{
-                                    "data-sort": "sort-name",
-                                    name: "Name"
+                    const advancedTable = {
+                        headers: [{
+                                "data-sort": "sort-name",
+                                name: "Name"
+                            },
+                            {
+                                "data-sort": "sort-email",
+                                name: "Email"
+                            },
+                            {
+                                "data-sort": "sort-status",
+                                name: "Status"
+                            },
+                            {
+                                "data-sort": "sort-date",
+                                name: "Start date"
+                            },
+                            {
+                                "data-sort": "sort-tags",
+                                name: "Tags"
+                            },
+                            {
+                                "data-sort": "sort-category",
+                                name: "Category"
+                            },
+                        ],
+                    };
+                    const setPageListItems = (e) => {
+                        window.tabler_list["advanced-table"].page = parseInt(e.target.dataset.value);
+                        window.tabler_list["advanced-table"].update();
+                        document.querySelector("#page-count").innerHTML = e.target.dataset.value;
+                    };
+                    window.tabler_list = window.tabler_list || {};
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const list = (window.tabler_list["advanced-table"] = new List("advanced-table", {
+                            sortClass: "table-sort",
+                            listClass: "table-tbody",
+                            page: parseInt("20"),
+                            pagination: {
+                                item: (value) => {
+                                    return `<li class="page-item"><a class="page-link cursor-pointer">${value.page}</a></li>`;
                                 },
-                                {
-                                    "data-sort": "sort-email",
-                                    name: "Email"
-                                },
-                                {
-                                    "data-sort": "sort-status",
-                                    name: "Status"
-                                },
-                                {
-                                    "data-sort": "sort-date",
-                                    name: "Start date"
-                                },
-                                {
-                                    "data-sort": "sort-tags",
-                                    name: "Tags"
-                                },
-                                {
-                                    "data-sort": "sort-category",
-                                    name: "Category"
-                                },
-                            ],
-                        };
-                        const setPageListItems = (e) => {
-                            window.tabler_list["advanced-table"].page = parseInt(e.target.dataset.value);
-                            window.tabler_list["advanced-table"].update();
-                            document.querySelector("#page-count").innerHTML = e.target.dataset.value;
-                        };
-                        window.tabler_list = window.tabler_list || {};
-                        document.addEventListener("DOMContentLoaded", function() {
-                            const list = (window.tabler_list["advanced-table"] = new List("advanced-table", {
-                                sortClass: "table-sort",
-                                listClass: "table-tbody",
-                                page: parseInt("20"),
-                                pagination: {
-                                    item: (value) => {
-                                        return `<li class="page-item"><a class="page-link cursor-pointer">${value.page}</a></li>`;
-                                    },
-                                    innerWindow: 1,
-                                    outerWindow: 1,
-                                    left: 0,
-                                    right: 0,
-                                },
-                                valueNames: advancedTable.headers.map((header) => header["data-sort"]),
-                            }));
-                            const searchInput = document.querySelector("#advanced-table-search");
-                            if (searchInput) {
-                                searchInput.addEventListener("input", () => {
-                                    list.search(searchInput.value);
-                                });
-                            }
-                        });
+                                innerWindow: 1,
+                                outerWindow: 1,
+                                left: 0,
+                                right: 0,
+                            },
+                            valueNames: advancedTable.headers.map((header) => header["data-sort"]),
+                        }));
+                        const searchInput = document.querySelector("#advanced-table-search");
+                        if (searchInput) {
+                            searchInput.addEventListener("input", () => {
+                                list.search(searchInput.value);
+                            });
+                        }
+                    });
                     </script>
                 </div>
             </div>
