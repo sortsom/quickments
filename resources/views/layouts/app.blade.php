@@ -19,7 +19,7 @@
     <!-- List.js - client-side search/sort/pagination for tables -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js" crossorigin="anonymous"
         referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
     <!-- Scripts -->
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}

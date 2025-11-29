@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="{{ asset('css/style.css') }}">
 @props(['members', 'leavetypes'])
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -34,9 +33,9 @@
         <div class="col-6">
             {{-- Member --}}
             <div class="mb-3">
-                <label class="form-label">Member</label>
+                <label class="form-label">ឈ្មោះ</label>
                 <select id="memberSelect" name="member_id" class="form-select" required>
-                    <option value="">-- Select Member --</option>
+
                     @foreach ($members as $member)
                         <option value="{{ $member->id }}" data-gender="{{ strtolower($member->gender) }}">
                             {{ $member->name }}
@@ -53,7 +52,7 @@
         <div class="col-6">
             {{-- Date --}}
             <div class="mb-3">
-                <label class="form-label">Date</label>
+                <label class="form-label">ចំនួនថ្ងៃសម្រាក</label>
                 <input type="number" name="date" class="form-control @error('date') is-invalid @enderror"
                     value="{{ old('date') }}" required>
                 @error('date')
@@ -67,7 +66,7 @@
         {{-- Start Date --}}
         <div class="col-6">
             <div class="mb-3">
-                <label class="form-label">Start Date</label>
+                <label class="form-label">ថ្ងៃចាប់ផ្តើម</label>
                 <input type="date" name="start_time" class="form-control @error('start_time') is-invalid @enderror"
                     value="{{ old('start_time') }}">
                 @error('start_time')
@@ -79,7 +78,7 @@
         {{-- End Date --}}
         <div class="col-6">
             <div class="mb-3">
-                <label class="form-label">End Date</label>
+                <label class="form-label">ថ្ងៃបញ្ចប់</label>
                 <input type="date" name="end_time" class="form-control @error('end_time') is-invalid @enderror"
                     value="{{ old('end_time') }}">
                 @error('end_time')
@@ -119,7 +118,7 @@
         {{-- Type --}}
         <div class="col-6">
             <div class="mb-3">
-                <label class="form-label">Leave Type</label>
+                <label class="form-label">ប្រភេទសម្រាក</label>
                 <select name="type" class="form-control @error('type') is-invalid @enderror" required>
                     <option value="full_day" {{ old('type') == 'full_day' ? 'selected' : '' }}>Full Day</option>
                     <option value="half_day_morning" {{ old('type') == 'half_day_morning' ? 'selected' : '' }}>Half Day
@@ -136,7 +135,7 @@
 
     {{-- Reason --}}
     <div class="mb-3">
-        <label class="form-label">Reason</label>
+        <label class="form-label">មូលហេតុសុំបែប Professional??</label>
         <textarea name="reason" class="form-control @error('reason') is-invalid @enderror" rows="3">{{ old('reason') }}</textarea>
         @error('reason')
             <span class="invalid-feedback">{{ $message }}</span>
@@ -145,7 +144,7 @@
 
     {{-- Photo --}}
     <div class="mb-3">
-        <label class="form-label">Photo</label>
+        <label class="form-label">រូបភាព</label>
         <input type="file" name="photo" class="form-control @error('photo') is-invalid @enderror">
         @error('photo')
             <span class="invalid-feedback">{{ $message }}</span>

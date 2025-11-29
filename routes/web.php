@@ -38,7 +38,10 @@ Route::middleware('auth')->group(function () {
     ->name('requestleave.approve');
     Route::post('requestleave/{requestleave}/reject', [RequestLeaveController::class, 'reject'])
     ->name('requestleave.reject');
-    
+
+    Route::get('requestleaves/report', [RequestLeaveController::class, 'report'])->name('requestleave.report');
+
+
    
 
 
@@ -47,6 +50,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/attendance/{attendance}', [AttendanceController::class, 'destroy'])->name('attendance.destroy');
     Route::post('/attendance', [AttendanceController::class, 'store'])->name('attendance.store');
     Route::put('/attendance/{attendance}', [AttendanceController::class, 'update'])->name('attendance.update');
+
+    Route::get('attendance/report', [AttendanceController::class, 'report'])
+    ->name('attendance.report');
     
     Route::get('/worktimes', [WorktimeController::class, 'index'])
     ->name('worktimes.index');

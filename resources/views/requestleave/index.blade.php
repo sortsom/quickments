@@ -123,15 +123,19 @@
                                     <td>{{ $request->approve_date }}</td>
                                     <td>
                                         @if (in_array(auth()->user()->role->role, ['owner', 'admin']))
-                                            <a href="{{ route('requestleave.edit', $request->id) }}"
-                                                class="text-blue me-2">
-                                                <x-edit />
-                                            </a>
+                                            <!-- Edit Button (open modal) -->
 
-                                            <a href="{{ route('requestleave.destroy', $request->id) }}"
-                                                class="text-red" onclick="return confirm('Are you sure?')">
-                                                <x-trash />
-                                            </a>
+                                            <a href="{{ route('requestleave.edit', $request->id) }}"><x-edit /></a>
+                                            <form action="{{ route('requestleave.destroy', $request->id) }}"
+                                                method="POST" style="display:inline;"
+                                                onsubmit="return confirm('Are you sure you want to delete this?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-link text-red p-0 m-0"
+                                                    style="border:none;">
+                                                    <x-trash />
+                                                </button>
+                                            </form>
                                         @endif
 
 
@@ -140,7 +144,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="text-center text-muted">
+                                    <td colspan="11" class="text-center text-muted">
                                         No leave requests found.
                                     </td>
                                 </tr>

@@ -313,6 +313,103 @@ class AttendanceController extends Controller
         $attendance->delete();
         return redirect()->route('attendance.index')->with('success', 'Attendance deleted successfully.');
     }
+public function report(Request $request)
+{
+    $requestedMember = $request->input('member'); // nullable
+    $fromRaw = $request->input('from');
+    $toRaw   = $request->input('to');
 
+    $from = $fromRaw ? Carbon::parse($fromRaw)->format('Y-m-d') : null;
+    $to   = $toRaw ? Carbon::parse($toRaw)->format('Y-m-d') : null;
+
+    $user = Auth::user();
+
+    if (!in_array($user->role->role, ['owner', 'admin'])) {
+        // staff: only their own member
+        $memberOfUser = Member::where('user_id', $user->id)->value('id');
+
+        if (!$memberOfUser) {
+            return view('attendances.report', [
+                'rows'    => [],
+                'summary' => [],
+                'members' => collect([]),
+                'filter'  => ['member' => null, 'from' => $from, 'to' => $to],
+            ])->with('error', 'No member record found for your account.');
+        }
+
+        $effectiveMember = $memberOfUser;
+        $members = Member::where('id', $memberOfUser)->get();
+    } else {
+        // owner/admin: show all members
+        $effectiveMember = $requestedMember ?: null;
+        $members = Member::all();
+    }
+
+    $query = Attendance::with(['member', 'details'])->orderBy('date', 'asc');
+
+    if ($effectiveMember) {
+        $query->where('member_id', $effectiveMember);
+    }
+
+    if ($from && $to) {
+        $query->whereBetween('date', [$from, $to]);
+    } elseif ($from) {
+        $query->where('date', '>=', $from);
+    } elseif ($to) {
+        $query->where('date', '<=', $to);
+    }
+
+    $attendances = $query->get();
+
+    // Build rows & summary (same as before)
+    $rows = []; $summary = [];
+    foreach ($attendances as $a) {
+        $lateMinutes = 0; $earlyMinutes = 0;
+        $present = $a->status == 1 ? 1 : 0;
+        foreach ($a->details as $d) {
+            $minutes = intval($d->count_time ?? 0);
+            if (strtolower($d->status) === 'late') $lateMinutes += $minutes;
+            if (strtolower($d->status) === 'early') $earlyMinutes += $minutes;
+        }
+
+        $rows[] = [
+            'attendance_id' => $a->id,
+            'member_id'     => $a->member_id,
+            'member_name'   => $a->member ? $a->member->name : '-',
+            'date'          => $a->date,
+            'present'       => $present,
+            'late_minutes'  => $lateMinutes,
+            'early_minutes' => $earlyMinutes,
+            'details'       => $a->details->map(fn($d)=>[
+                                'check_type'=>$d->check_type,'clock'=>$d->clock,
+                                'status'=>$d->status,'count_time'=>$d->count_time,'reason'=>$d->reason
+                              ])->toArray(),
+        ];
+
+        if (!isset($summary[$a->member_id])) {
+            $summary[$a->member_id] = [
+                'member_id'=>$a->member_id,'member_name'=>$a->member? $a->member->name : '-',
+                'total_days'=>0,'present_days'=>0,'total_late'=>0,'total_early'=>0,
+            ];
+        }
+
+        $summary[$a->member_id]['total_days']++;
+        $summary[$a->member_id]['present_days'] += $present;
+        $summary[$a->member_id]['total_late'] += $lateMinutes;
+        $summary[$a->member_id]['total_early'] += $earlyMinutes;
+    }
+
+    $summary = array_values($summary);
+
+    // For view: use requestedMember for admins, or forced member for staff
+    $filterMemberForView = in_array($user->role->role, ['owner', 'admin']) ? $requestedMember : $effectiveMember;
+
+    return view('attendances.report', [
+        'rows'    => $rows,
+        'summary' => $summary,
+        'members' => $members,
+        'filter'  => ['member' => $filterMemberForView, 'from' => $from, 'to' => $to],
+    ]);
+}
     
 }

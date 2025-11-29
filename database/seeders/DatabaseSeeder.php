@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         MemberSeeder::class,
         StatusSeeder::class,
         AttendanceSeeder::class,
+        LeaveTypeSeeder::class,
     ]);
     }
 }
