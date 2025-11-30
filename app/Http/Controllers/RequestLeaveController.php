@@ -23,33 +23,33 @@ class RequestLeaveController extends Controller
     public function index()
     {
           
-    $query = RequestLeave::with(['member', 'typeLeave', 'status', 'approver', 'user']);
+        $query = RequestLeave::with(['member', 'typeLeave', 'status', 'approver', 'user']);
 
-    $user = Auth::user();
+        $user = Auth::user();
 
-    if (in_array($user->role->role, ['owner', 'admin'])) {
-        $requests = $query->latest()->get();
-    } else {
-        $requests = $query->where('user_id', $user->id)
-                          ->latest()
-                          ->get();
-    }
+        if (in_array($user->role->role, ['owner', 'admin'])) {
+            $requests = $query->latest()->get();
+        } else {
+            $requests = $query->where('user_id', $user->id)
+                            ->latest()
+                            ->get();
+        }
 
-    if (in_array($user->role->role, ['owner', 'admin'])) {
-        // Show all members
-        $members = Member::orderBy('name')->get();
-    } else {
-        // Staff: only their member record
-        $members = Member::where('user_id', $user->id)
-                         ->orderBy('name')
-                         ->get();
-    }
+        if (in_array($user->role->role, ['owner', 'admin'])) {
+            // Show all members
+            $members = Member::orderBy('name')->get();
+        } else {
+            // Staff: only their member record
+            $members = Member::where('user_id', $user->id)
+                            ->orderBy('name')
+                            ->get();
+        }
 
-    // Leave types
-    $leavetypes = LeaveType::all();
+        // Leave types
+        $leavetypes = LeaveType::all();
 
-    // Send data to view
-    return view('requestleave.index', compact('members', 'leavetypes', 'requests'));
+        // Send data to view
+        return view('requestleave.index', compact('members', 'leavetypes', 'requests'));
     }
 
 

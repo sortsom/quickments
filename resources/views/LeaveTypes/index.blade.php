@@ -48,6 +48,7 @@
                     })
                 </script> -->
                 <div class="card">
+                    <x-alert-messege />
                     <div class="card-table">
                         <div class="card-header">
                             <div class="row w-full align-items-center">
@@ -102,24 +103,24 @@
                                     </thead>
                                     <tbody class="table-tbody">
                                         @foreach ($leaveTypes as $leaveType)
-                                            <tr>
-                                                <td><input class="form-check-input m-0 align-middle" type="checkbox"
-                                                        aria-label="Select invoice"></td>
-                                                <td>{{ $leaveType->name }}</td>
-                                                <td>{{ $leaveType->name_kh }}</td>
-                                                <td>{{ ucfirst($leaveType->allowed) }}</td>
-                                                <td>{{ $leaveType->counting_days }}</td>
-                                                <td class="text-end">
-                                                    <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                                    <form action="{{ route('leave-types.destroy', $leaveType->id) }}"
-                                                        method="POST" class="d-inline">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm"
-                                                            onclick="return confirm('Are you sure you want to delete this leave type?')">Delete</button>
-                                                    </form>
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            <td><input class="form-check-input m-0 align-middle" type="checkbox"
+                                                    aria-label="Select invoice"></td>
+                                            <td>{{ $leaveType->name }}</td>
+                                            <td>{{ $leaveType->name_kh }}</td>
+                                            <td>{{ ucfirst($leaveType->allowed) }}</td>
+                                            <td>{{ $leaveType->counting_days }}</td>
+                                            <td class="text-end">
+                                                <a href="#" class="btn btn-primary btn-sm">Edit</a>
+                                                <form action="{{ route('leave-types.destroy', $leaveType->id) }}"
+                                                    method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                        onclick="return confirm('Are you sure you want to delete this leave type?')">Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -156,62 +157,62 @@
                     </div>
                 </div>
                 <script>
-                    const advancedTable = {
-                        headers: [{
-                                "data-sort": "sort-name",
-                                name: "Name"
+                const advancedTable = {
+                    headers: [{
+                            "data-sort": "sort-name",
+                            name: "Name"
+                        },
+                        {
+                            "data-sort": "sort-email",
+                            name: "Email"
+                        },
+                        {
+                            "data-sort": "sort-status",
+                            name: "Status"
+                        },
+                        {
+                            "data-sort": "sort-date",
+                            name: "Start date"
+                        },
+                        {
+                            "data-sort": "sort-tags",
+                            name: "Tags"
+                        },
+                        {
+                            "data-sort": "sort-category",
+                            name: "Category"
+                        },
+                    ],
+                };
+                const setPageListItems = (e) => {
+                    window.tabler_list["advanced-table"].page = parseInt(e.target.dataset.value);
+                    window.tabler_list["advanced-table"].update();
+                    document.querySelector("#page-count").innerHTML = e.target.dataset.value;
+                };
+                window.tabler_list = window.tabler_list || {};
+                document.addEventListener("DOMContentLoaded", function() {
+                    const list = (window.tabler_list["advanced-table"] = new List("advanced-table", {
+                        sortClass: "table-sort",
+                        listClass: "table-tbody",
+                        page: parseInt("20"),
+                        pagination: {
+                            item: (value) => {
+                                return `<li class="page-item"><a class="page-link cursor-pointer">${value.page}</a></li>`;
                             },
-                            {
-                                "data-sort": "sort-email",
-                                name: "Email"
-                            },
-                            {
-                                "data-sort": "sort-status",
-                                name: "Status"
-                            },
-                            {
-                                "data-sort": "sort-date",
-                                name: "Start date"
-                            },
-                            {
-                                "data-sort": "sort-tags",
-                                name: "Tags"
-                            },
-                            {
-                                "data-sort": "sort-category",
-                                name: "Category"
-                            },
-                        ],
-                    };
-                    const setPageListItems = (e) => {
-                        window.tabler_list["advanced-table"].page = parseInt(e.target.dataset.value);
-                        window.tabler_list["advanced-table"].update();
-                        document.querySelector("#page-count").innerHTML = e.target.dataset.value;
-                    };
-                    window.tabler_list = window.tabler_list || {};
-                    document.addEventListener("DOMContentLoaded", function() {
-                        const list = (window.tabler_list["advanced-table"] = new List("advanced-table", {
-                            sortClass: "table-sort",
-                            listClass: "table-tbody",
-                            page: parseInt("20"),
-                            pagination: {
-                                item: (value) => {
-                                    return `<li class="page-item"><a class="page-link cursor-pointer">${value.page}</a></li>`;
-                                },
-                                innerWindow: 1,
-                                outerWindow: 1,
-                                left: 0,
-                                right: 0,
-                            },
-                            valueNames: advancedTable.headers.map((header) => header["data-sort"]),
-                        }));
-                        const searchInput = document.querySelector("#advanced-table-search");
-                        if (searchInput) {
-                            searchInput.addEventListener("input", () => {
-                                list.search(searchInput.value);
-                            });
-                        }
-                    });
+                            innerWindow: 1,
+                            outerWindow: 1,
+                            left: 0,
+                            right: 0,
+                        },
+                        valueNames: advancedTable.headers.map((header) => header["data-sort"]),
+                    }));
+                    const searchInput = document.querySelector("#advanced-table-search");
+                    if (searchInput) {
+                        searchInput.addEventListener("input", () => {
+                            list.search(searchInput.value);
+                        });
+                    }
+                });
                 </script>
             </div>
         </div>
