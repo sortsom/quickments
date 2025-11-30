@@ -4,7 +4,7 @@ README ណែនាំដំឡើង និងប្រើប្រាស់ស
 
 ---
 
-## 🧩 តម្រូវការមុនដំបូង
+## តម្រូវការមុនដំបូង
 - **PHP ≥ 8.3**
 - **Composer (latest)**
 - **Git**
@@ -15,7 +15,7 @@ README ណែនាំដំឡើង និងប្រើប្រាស់ស
 
 ---
 
-## 🚀 ការដំឡើង
+## ការដំឡើង
 
 ### 1. Clone Project
 ```bash
@@ -121,7 +121,7 @@ Laragon/XAMPP:
 
 ---
 
-## ⭐ Best Practices
+## Best Practices
 - កុំ commit `.env` ទៅ GitHub
 - Production:
   - `APP_ENV=production`
@@ -131,7 +131,7 @@ Laragon/XAMPP:
 
 ---
 
-## 📌 Quick Checklist
+## Quick Checklist
 - [ ] Clone project  
 - [ ] ចម្លង `.env` និងកែ DB  
 - [ ] `composer install`  
